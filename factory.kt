@@ -1,4 +1,5 @@
-import kotlin.random.Random
+import People.Hero
+import People.Shu.*
 
 class HeroFactory{
     var roles = listOf<Role>(Emperor(),Rebels(),Loyalist(),Traitor());

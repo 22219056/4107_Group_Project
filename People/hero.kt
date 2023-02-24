@@ -1,8 +1,19 @@
+package People
+
+import ANSIColorConsole
+import Card
+import Role
+
 enum class Gender {
     Male, Female;
 }
 
-abstract class Hero(role: Role) {
+interface Handler{
+    fun setNext(h: Handler)
+    fun handle():Boolean
+}
+
+abstract class Hero(role: Role):Handler {
     abstract var name: String;
     abstract var HP: Int;
     abstract var maxHP: Int;
@@ -109,18 +120,18 @@ abstract class Hero(role: Role) {
 
 }
 
-class LiuBei(role: Role) : Hero(role) {
-    override var name = "Liu Bei";
-    override var HP = 4;
-    override var maxHP = 4;
-    override var gender = Gender.Male;
-    override var cards = mutableListOf<Card>();
-}
-
-class GuanYu(role: Role) : Hero(role) {
-    override var name = "Guan Yu";
-    override var HP = 4;
-    override var maxHP = 4;
-    override var gender = Gender.Male;
-    override var cards = mutableListOf<Card>();
-}
+//class LiuBei(role: Role) : Hero(role) {
+//    override var name = "Liu Bei";
+//    override var HP = 4;
+//    override var maxHP = 4;
+//    override var gender = Gender.Male;
+//    override var cards = mutableListOf<Card>();
+//}
+//
+//class GuanYu(role: Role) : Hero(role) {
+//    override var name = "Guan Yu";
+//    override var HP = 4;
+//    override var maxHP = 4;
+//    override var gender = Gender.Male;
+//    override var cards = mutableListOf<Card>();
+//}

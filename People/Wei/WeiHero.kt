@@ -1,12 +1,12 @@
 package People.Wei
 
 import Card
-import Handler
-import Hero
+import People.Gender
+import People.Hero
 import People.Wu.WuHero
 import Role
-
-abstract class WeiHero(role: Role):Hero(role),Handler{
+import People.Handler
+abstract class WeiHero(role: Role): Hero(role),Handler{
     var nation = "Wei"
     var otherHero: Handler? = null
 

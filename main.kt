@@ -1,3 +1,5 @@
+import People.Hero
+
 class Game {
     lateinit var currentHero: Hero;
     lateinit var heros: List<Hero>;

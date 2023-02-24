@@ -1,3 +1,5 @@
+import People.Hero
+
 class EventManager {
     var listeners: MutableList<Listener> = mutableListOf();
 

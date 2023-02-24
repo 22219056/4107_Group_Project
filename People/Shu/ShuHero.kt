@@ -1,11 +1,12 @@
 package People.Shu
 
 import Card
-import Handler
-import Hero
+import People.Handler
+import People.Gender
+import People.Hero
 import Role
 
-abstract class ShuHero(role: Role):Hero(role),Handler{
+abstract class ShuHero(role: Role): Hero(role),Handler{
     var nation = "Shu"
     var otherHero: Handler? = null
 

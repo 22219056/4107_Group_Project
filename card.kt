@@ -1,3 +1,5 @@
+import People.Hero
+
 enum class Suit{
     Spade, Heart, Diamond, Club;
 }
