@@ -2,16 +2,77 @@ enum class Suit{
     Spade, Heart, Diamond, Club;
 }
 
-interface Card{
-    var name: String;
-    var suit: Suit;
-    var rank: Int;
+enum class Color{
+   Black, Red;
 }
 
-abstract class BasicCard: Card{ }
 
-abstract class EquipmentCard: Card{
+interface Card {
+    val name: String
+    val suit: Suit
+    val rank: Int
+    val color: Color
+    val used: Boolean
+    
+    fun getCardString(): String {
+        var suitString = when (suit) {
+            Suit.Spade -> "♠"
+            Suit.Heart -> "♥"
+            Suit.Club -> "♣"
+            Suit.Diamond -> "♦"
+        }
+        if(color == Color.Red)
+            suitString = ANSIColorConsole.red(suitString);
+        else
+            suitString = ANSIColorConsole.black(suitString);
 
+        return "$color $suitString $rank $name";
+    }
+    
 }
 
+abstract class BasicCard: Card{
+    override val used: Boolean = false;
+
+    open fun active(){};
+}
+
+class AttackCard(color: Color, suit: Suit, rank: Int): BasicCard(){
+    override var name = "Attack";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+     fun active(targetHero: Hero){
+        if(targetHero.HP > 0){
+            targetHero.HP -= 1;
+        }
+    }
+}
+
+class DodgeCard(color: Color, suit: Suit, rank: Int): BasicCard(){
+    override var name = "Dodge";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;  
+}
+
+class PeachCard(color: Color, suit: Suit, rank: Int): BasicCard(){
+    override var name = "Peach";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;  
+}
+
+// abstract class TacticsCard:Card{
+// }
+
+// abstract class DelayTacticsCard:Card{}
+
+// abstract class EquipmentCard: Card{   
+// }
+
+// abstract class ArmorCard:Card{}
+
+// abstract class MountsCard:Card{}
 
