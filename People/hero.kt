@@ -21,26 +21,31 @@ abstract class Hero(role: Role):Handler {
     abstract var cards: MutableList<Card>;
     var role: Role = role;
 
-    fun displayCards() {
+    open fun drawPhase(hero: Hero) {
+        hero.getCard(Deck.getRadomBasicCard())
+        hero.getCard(Deck.getRadomBasicCard())
+    }
+
+    open fun displayCards() {
         println("Card List: ");
         for ((index, card) in cards.withIndex()) {
             println("${index + 1}.[${card.getCardString()}] ");
         }
     }
 
-    fun showCurrentHP() {
+    open fun showCurrentHP() {
         println("${ANSIColorConsole.red("♥")} HP = ${HP}");
     }
 
-    fun getCard(card: Card) {
+    open fun getCard(card: Card) {
         cards.add(card);
     }
 
-    fun removeCard(card: Card) {
+    open fun removeCard(card: Card) {
         cards.remove(card);
     }
 
-    fun showRoleList(heros: List<Hero>, currentHero: String) {
+    open fun showRoleList(heros: List<Hero>, currentHero: String) {
         for ((index, hero) in heros.withIndex()) {
             if (!hero.name.equals(currentHero))
                 println("${index + 1}. ${hero.name}")
@@ -49,7 +54,7 @@ abstract class Hero(role: Role):Handler {
         }
     }
 
-    fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
+    open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
         println("Select you want to attack role")
 
         showRoleList(heros, currentHero)
@@ -69,7 +74,7 @@ abstract class Hero(role: Role):Handler {
 //        mainEventManager.notifyListener("Attack", this, placedCard);
     }
 
-    fun dodgeEvent(heros: List<Hero>, beAttackedHero: String) {
+    open fun dodgeEvent(heros: List<Hero>, beAttackedHero: String) {
 
         for ((index, hero) in heros.withIndex()) {
 

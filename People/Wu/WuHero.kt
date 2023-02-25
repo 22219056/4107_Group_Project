@@ -63,6 +63,14 @@ class ZhouYU(role: Role): WuHero(role){
     override var gender = Gender.Male;
     override var cards = mutableListOf<Card>();
 
+    override fun drawPhase(hero: Hero) {
+        super.drawPhase(hero)
+        println("I am handsome boy, one more draw")
+        hero.getCard(Deck.getRadomBasicCard())
+    }
+
+
+
 }
 
 class LuXun(role: Role): WuHero(role){

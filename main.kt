@@ -9,20 +9,15 @@ class Game {
     }
 
     fun judgmentPhase() {}
-    fun drawPhase(hero: Hero) {
-        for (i in 1..2) {
-            hero.getCard(Deck.getRadomBasicCard())
 
-        }
-
-    }
 
     fun mainPhase(name: String) {
 
 
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
         currentHero.showCurrentHP();
-        drawPhase(currentHero)
+        currentHero.drawPhase(currentHero)
+
         while (currentHero.cards.size > 0) {
             println("${name}'s turn:");
             currentHero.displayCards();

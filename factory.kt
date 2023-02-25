@@ -1,13 +1,14 @@
 import People.Hero
 import People.Shu.*
-
+import People.Wu.*
+import People.Wei.*
 class HeroFactory{
     var roles = listOf<Role>(Emperor(),Rebels(),Loyalist(),Traitor());
     lateinit var listOfHero: List<Hero>;
 
     fun initHeros(){
         listOfHero = listOf<Hero>(
-            LiuBei(roles.random()),
+            ZhouYU(roles.random()),
             GuanYu(roles.random())
         );
 
