@@ -33,29 +33,29 @@ class Game {
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
-
-                    currentHero.attackEvent(cardPlaced,heros,currentHero.name);
-
+                    currentHero.attackEventHandle(cardPlaced);
+                    //currentHero.attackEvent(cardPlaced,heros,currentHero.name);
                 }
                 currentHero.removeCard(cardPlaced);
-
             }
             println()
-
         }
     }
 
     fun discardPhase() {
 
-
         while (currentHero.cards.size > currentHero.HP) {
             println("You need to discard ${currentHero.cards.size - currentHero.HP}")
-            var playerInput = readLine();
-
-            var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
-            println("You discard [${cardPlaced.getCardString()}]")
-            currentHero.removeCard(cardPlaced);
+            var selectedCard =  currentHero.askHeroPlaceACard();
+            currentHero.cards.remove(selectedCard);
+            println("You discard [${selectedCard.getCardString()}]");
             currentHero.displayCards();
+
+//            var playerInput = readLine();
+//            var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
+//            println("You discard [${cardPlaced.getCardString()}]")
+//            currentHero.removeCard(cardPlaced);
+//            currentHero.displayCards();
         }
 
     }
@@ -66,7 +66,7 @@ class Game {
     }
 
     fun start() {
-
+    while(true){
         for (hero in heros) {
             currentHero = hero;
             startPhase();
@@ -77,20 +77,21 @@ class Game {
         }
     }
 
+    }
+
 }
 
 
 //--global variables
 var mainEventManager = EventManager();
-
+var heros: List<Hero> = listOf();
 
 //--------
 
 fun main() {
-
     var heroFactory = HeroFactory();
     heroFactory.initHeros();
-    var heros = heroFactory.listOfHero;
+    heros = heroFactory.listOfHero;
     var cardFactory = CardFactory(heros);
     cardFactory.dealingCard();
 

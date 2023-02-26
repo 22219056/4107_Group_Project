@@ -1,5 +1,8 @@
 import People.Hero
 
+enum class EventType{
+    Attack
+}
 class EventManager {
     var listeners: MutableList<Listener> = mutableListOf();
 
@@ -13,14 +16,23 @@ class EventManager {
 
     fun notifyListener(eventType: String, target: Hero, card: Card, continuable: Boolean = false) {
         for (listener in listeners) {
-
             if (listener.hero == target) //Avoid using effects that affect the hero themselves
                 continue;
-
             if (eventType == "Attack") {
                 if (listener.beAttack(target, card)) {
                     break
                 }
+            }
+        }
+    }
+
+    fun notifySpecificListener(eventType: String, target: Hero, specificHero: Hero, card: Card){
+        for (listener in listeners) {
+            if(listener.hero == specificHero){
+                if(eventType == "Attack"){
+                    listener.beAttack(target, card);
+                }
+                break;
             }
         }
     }
@@ -31,40 +43,69 @@ class Listener(val hero: Hero) {
 
     //if the affect successfully return true otherwise return false
     fun beAttack(target: Hero, cardByAttacker: Card): Boolean {
-        var state: Boolean = false;
+        //var state: Boolean = false;
         //Check whether the player has a dodge card.
         println("${hero.name} is under attack now");
-        for (card in hero.cards) {
-            if (state)
-                break;
 
-            if (card is DodgeCard) {
-                println("Do you want to place a dodge card?(yes/no)");
-                while (true) {
-                    var decision = readLine();
-                    when (decision) {
-                        "yes" -> {
-                            state = true;
-                            println("${hero.name} dodged attack")
-                            hero.cards.remove(card);
-                            break;
-                        }
-
-                        "no" -> break;
-                        else -> {
-                            println("invalid input, please input again");
-                            continue;
-                        }
-                    }
-                }
+        //player has not a dodge card
+        if(!hero.hasDodgeTypeCard()){
+            if(hero.HP > 0){
+                hero.HP -= 1;
             }
-
+            ANSIColorConsole.printDanger("${hero.name} can't dodge this attack as ${hero.name} don't have a dodge card.");
+            println("${hero.name} get hurt hp -1");
+            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+            return false;
         }
-        if (state == false) {
-            ANSIColorConsole.printDanger("${hero.name} can't dodge attack.");
-            (cardByAttacker as AttackCard).active(hero);
+
+        while(true){
+            var selectedDodgeCard = hero.askHeroPlaceACardOrNot(listOf("Dodge"));
+            if(selectedDodgeCard is DodgeCard){
+                hero.removeCard(selectedDodgeCard);
+                println("${hero.name} dodged the attack");
+                return true;
+            }else{
+                if(hero.HP > 0){
+                    hero.HP -= 1;
+                }
+                println("${hero.name} get hurt hp -1");
+                println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+                return false;
+            }
         }
 
-        return state;
+
+//        for (card in hero.cards) {
+//            if (state)
+//                break;
+//
+//            if (card is DodgeCard) {
+//                println("Do you want to place a dodge card?(yes/no)");
+//                while (true) {
+//                    var decision = readLine();
+//                    when (decision) {
+//                        "yes" -> {
+//                            state = true;
+//                            println("${hero.name} dodged attack")
+//                            hero.cards.remove(card);
+//                            break;
+//                        }
+//
+//                        "no" -> break;
+//                        else -> {
+//                            println("invalid input, please input again");
+//                            continue;
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//        if (state == false) {
+//            ANSIColorConsole.printDanger("${hero.name} can't dodge attack.");
+//            (cardByAttacker as AttackCard).active(hero);
+//        }
+//
+//        return state;
     }
 }

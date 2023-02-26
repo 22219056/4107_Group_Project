@@ -2,7 +2,10 @@ package People
 
 import ANSIColorConsole
 import Card
+import DodgeCard
 import Role
+import heros
+import mainEventManager
 
 enum class Gender {
     Male, Female;
@@ -26,12 +29,82 @@ abstract class Hero(role: Role):Handler {
         hero.getCard(Deck.getRadomBasicCard())
     }
 
+    //Compulsory
+    open fun askHeroPlaceACard(): Card{
+        println("Please place a card");
+        while(true){
+            this.displayCards();
+            var index = readLine()?.toInt(); //card of index
+            if(index !== null && cards.size > index){
+                return cards[index];
+            }
+            println("Not valid input, Please input again.");
+            continue;
+        }
+    }
+    //Selection
+    open fun askHeroPlaceACardOrNot(filterList: List<String>? = null): Card?{
+        var cardList = mutableListOf<Card>();
+        cardList = if(filterList != null){
+            filterCardFromCards(filterList);
+        }else{
+            cards;
+        }
+
+        println("Please place a card");
+        while(true){
+            this.displayCardFromList(cardList);
+            println("0.[cancel place a card]");
+            var index = readLine()?.toInt();
+
+            if(index != 0 && cardList.size > index!!){
+                return cardList[index-1];
+            }
+            else if(index == 0){
+                break;
+            }
+            println("Not valid input, Please input again.");
+            continue;
+        }
+        return null;
+    }
+
+    open fun hasDodgeTypeCard(): Boolean{
+        for(card in cards){
+            if(card is DodgeCard || card.name == "Dodge"){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    open fun displayCardFromList(cardList: List<Card>){
+        println("Card List: ");
+        for((index, card) in cardList.withIndex()){
+            println("${index + 1}.[${card.getCardString()}] ");
+        }
+    }
+
+    open fun filterCardFromCards(filterList: List<String>? = null): MutableList<Card> {
+        val filteredCardList = mutableListOf<Card>();
+        if (filterList != null) {
+            for (card in cards) {
+
+                if (card.name in filterList) {
+                    filteredCardList.add(card);
+                }
+            }
+        }
+        return filteredCardList;
+    }
+
     open fun displayCards() {
         println("Card List: ");
         for ((index, card) in cards.withIndex()) {
             println("${index + 1}.[${card.getCardString()}] ");
         }
     }
+
 
     open fun showCurrentHP() {
         println("${ANSIColorConsole.red("♥")} HP = ${HP}");
@@ -49,8 +122,25 @@ abstract class Hero(role: Role):Handler {
         for ((index, hero) in heros.withIndex()) {
             if (!hero.name.equals(currentHero))
                 println("${index + 1}. ${hero.name}")
+        }
+    }
 
+    open fun attackEventHandle(placedCard: Card){
+        println("Please select a hero you want to attack");
 
+        //show list of hero
+        var availableHeroes = listOf<Hero>();
+        for((index, hero) in heros.withIndex()){
+            if(hero != this){
+                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+            }
+        }
+
+        //selected by attacker
+        var index = readlnOrNull()?.toInt();
+        if(index != null){
+            mainEventManager.notifySpecificListener("Attack",this, availableHeroes[index], placedCard);
         }
     }
 
