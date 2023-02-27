@@ -36,13 +36,13 @@ class Game {
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
-                    if(!attackState){
+                    if(!attackState && !currentHero.weapons?.name.equals("Zhuge Crossbow")){
                         println("You can not attack again\n")
                         continue
                     }
                     currentHero.attackEventHandle(cardPlaced);
                     attackState=false
-                    //currentHero.attackEvent(cardPlaced,heros,currentHero.name);
+
                 }else if(cardPlaced.name=="Peach"){
                     if(currentHero.HP==currentHero.maxHP){
                         println("You HP is max, please you again select other card")
@@ -52,6 +52,8 @@ class Game {
                         currentHero.removeCard(cardPlaced)
                         currentHero.showCurrentHP()
                     }
+                }else if(cardPlaced is EquipmentCard){
+                    currentHero.weapons=cardPlaced
                 }
                 currentHero.removeCard(cardPlaced);
             }

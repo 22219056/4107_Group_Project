@@ -12,19 +12,19 @@ enum class Gender {
     Male, Female;
 }
 
-interface Handler{
+interface Handler {
     fun setNext(h: Handler)
-    fun handle():Boolean
+    fun handle(): Boolean
 }
 
-abstract class Hero(role: Role):Handler {
+abstract class Hero(role: Role) : Handler {
     abstract var name: String;
     abstract var HP: Int;
     abstract var maxHP: Int;
     abstract var gender: Gender;
     abstract var cards: MutableList<Card>;
     var role: Role = role;
-    abstract var weapons:Card
+    open var weapons: Card? = null
 
     open fun drawPhase(hero: Hero) {
         hero.getCard(Deck.getRadomCard())
@@ -32,44 +32,44 @@ abstract class Hero(role: Role):Handler {
     }
 
     //Compulsory
-    open fun askHeroPlaceACard(filterList: List<String>? = null): Card{
+    open fun askHeroPlaceACard(filterList: List<String>? = null): Card {
         var cardList = mutableListOf<Card>();
-        cardList = if(filterList != null){
+        cardList = if (filterList != null) {
             filterCardFromCards(filterList);
-        }else{
+        } else {
             cards;
         }
 
-        while(true){
+        while (true) {
             println("Please place a card");
             this.displayCardFromList(cardList);
             var index = readLine()?.toInt(); //card of index
-            if(index !== null && cards.size >= index && index!! > 0){
-                return cards[index-1];
+            if (index !== null && cards.size >= index && index!! > 0) {
+                return cards[index - 1];
             }
             println("Not valid input, Please input again.");
             continue;
         }
     }
+
     //Selection
-    open fun askHeroPlaceACardOrNot(filterList: List<String>? = null): Card?{
+    open fun askHeroPlaceACardOrNot(filterList: List<String>? = null): Card? {
         var cardList = mutableListOf<Card>();
-        cardList = if(filterList != null){
+        cardList = if (filterList != null) {
             filterCardFromCards(filterList);
-        }else{
+        } else {
             cards;
         }
 
-        while(true){
+        while (true) {
             println("Please place a card");
             this.displayCardFromList(cardList);
             println("0.[cancel place a card]");
             var index = readLine()?.toInt();
 
-            if(index != 0 && cardList.size >= index!!){
-                return cardList[index-1];
-            }
-            else if(index == 0){
+            if (index != 0 && cardList.size >= index!!) {
+                return cardList[index - 1];
+            } else if (index == 0) {
                 break;
             }
             println("Not valid input, Please input again.");
@@ -78,27 +78,27 @@ abstract class Hero(role: Role):Handler {
         return null;
     }
 
-    open fun hasDodgeTypeCard(): Boolean{
-        for(card in cards){
-            if(card is DodgeCard || card.name == "Dodge"){
+    open fun hasDodgeTypeCard(): Boolean {
+        for (card in cards) {
+            if (card is DodgeCard || card.name == "Dodge") {
                 return true;
             }
         }
         return false;
     }
 
-    open fun hasPeachTypeCard(): Boolean{
-        for(card in cards){
-            if(card is PeachCard || card.name == "Peach"){
+    open fun hasPeachTypeCard(): Boolean {
+        for (card in cards) {
+            if (card is PeachCard || card.name == "Peach") {
                 return true;
             }
         }
         return false;
     }
 
-    open fun displayCardFromList(cardList: List<Card>){
+    open fun displayCardFromList(cardList: List<Card>) {
         println("Card List: ");
-        for((index, card) in cardList.withIndex()){
+        for ((index, card) in cardList.withIndex()) {
             println("${index + 1}.[${card.getCardString()}] ");
         }
     }
@@ -143,13 +143,13 @@ abstract class Hero(role: Role):Handler {
         }
     }
 
-    open fun attackEventHandle(placedCard: Card){
+    open fun attackEventHandle(placedCard: Card) {
         println("Please select a hero you want to attack");
 
         //show list of hero
         var availableHeroes = listOf<Hero>();
-        for((index, hero) in heros.withIndex()){
-            if(hero != this){
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }
@@ -157,8 +157,8 @@ abstract class Hero(role: Role):Handler {
 
         //selected by attacker
         var index = readlnOrNull()?.toInt();
-        if(index != null){
-            mainEventManager.notifySpecificListener("Attack",this, availableHeroes[index], placedCard);
+        if (index != null) {
+            mainEventManager.notifySpecificListener("Attack", this, availableHeroes[index], placedCard);
         }
     }
 
@@ -191,31 +191,31 @@ abstract class Hero(role: Role):Handler {
                 for ((index, card) in hero.cards.withIndex()) {
 
 //                    if (card.name.equals("Dodge")) {
-                        println("${hero.name}")
-                        hero.displayCards()
-                        print("0.[give up dodge]\n");
+                    println("${hero.name}")
+                    hero.displayCards()
+                    print("0.[give up dodge]\n");
 
-                        while (true) {
-                            var commandInput = readLine();
-                            if (commandInput == "0") {
-                                println("${hero.name} get hurt hp -1")
-                                hero.HP -= 1
-                                println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}")
+                    while (true) {
+                        var commandInput = readLine();
+                        if (commandInput == "0") {
+                            println("${hero.name} get hurt hp -1")
+                            hero.HP -= 1
+                            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}")
+                            break
+                        } else {
+                            if (hero.cards[commandInput!!.toInt() - 1].name.equals("Dodge")) {
+                                println(hero.cards[commandInput!!.toInt() - 1].name)
+                                var cardPlaced = hero.cards[commandInput!!.toInt() - 1];
+                                hero.removeCard(cardPlaced);
+                                println("${hero.name} use dodge card to dodge attack")
                                 break
                             } else {
-                                if (hero.cards[commandInput!!.toInt() - 1].name.equals("Dodge")) {
-                                    println(hero.cards[commandInput!!.toInt() - 1].name)
-                                    var cardPlaced = hero.cards[commandInput!!.toInt() - 1];
-                                    hero.removeCard(cardPlaced);
-                                    println("${hero.name} use dodge card to dodge attack")
-                                    break
-                                } else {
-                                    println("You can not use this card ,please input command again")
-                                    continue
-                                }
-
+                                println("You can not use this card ,please input command again")
+                                continue
                             }
+
                         }
+                    }
 //                    }
 
                 }

@@ -33,13 +33,13 @@ interface Card {
     
 }
 
-abstract class BasicList : Card{
+abstract class BasicCard : Card{
     override val used: Boolean = false;
 
     open fun active(){};
 }
 
-class AttackCard(color: Color, suit: Suit, rank: Int): BasicList (){
+class AttackCard(color: Color, suit: Suit, rank: Int): BasicCard (){
     override var name = "Attack";
     override var color = color;
     override var suit = suit;
@@ -52,14 +52,14 @@ class AttackCard(color: Color, suit: Suit, rank: Int): BasicList (){
     }
 }
 
-class DodgeCard(color: Color, suit: Suit, rank: Int): BasicList (){
+class DodgeCard(color: Color, suit: Suit, rank: Int): BasicCard (){
     override var name = "Dodge";
     override var color = color;
     override var suit = suit;
     override var rank = rank;  
 }
 
-class PeachCard(color: Color, suit: Suit, rank: Int): BasicList (){
+class PeachCard(color: Color, suit: Suit, rank: Int): BasicCard (){
     override var name = "Peach";
     override var color = color;
     override var suit = suit;

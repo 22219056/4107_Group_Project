@@ -66,7 +66,7 @@ class ZhouYU(role: Role): WuHero(role){
     override fun drawPhase(hero: Hero) {
         super.drawPhase(hero)
         println("I am handsome boy, one more draw")
-        hero.getCard(Deck.getRadomBasicCard())
+        hero.getCard(Deck.getRadomCard())
     }
 
 
