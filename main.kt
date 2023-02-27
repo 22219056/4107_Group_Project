@@ -24,7 +24,7 @@ class Game {
             print("Please select a card: ");
             var playerInput = readLine();
             if (playerInput == "0") {
-                // discardPhase()
+//                 discardPhase()
                 break;
             } else {
                 //player placed a card
@@ -34,12 +34,23 @@ class Game {
                 if (cardPlaced.name == "Attack") {
                     currentHero.attackEventHandle(cardPlaced);
                     //currentHero.attackEvent(cardPlaced,heros,currentHero.name);
+                }else if(cardPlaced.name=="Peach"){
+                    if(currentHero.HP==currentHero.maxHP){
+                        println("You HP is max, please you again select other card")
+                        continue
+                    }else{
+                        currentHero.HP+=1
+                        currentHero.removeCard(cardPlaced)
+                        currentHero.showCurrentHP()
+                    }
                 }
                 currentHero.removeCard(cardPlaced);
             }
             println()
         }
     }
+
+
 
     fun discardPhase() {
 

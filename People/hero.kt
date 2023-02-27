@@ -124,7 +124,7 @@ abstract class Hero(role: Role):Handler {
 
 
     open fun showCurrentHP() {
-        println("${ANSIColorConsole.red("♥")} HP = ${HP}");
+        println("$name ${ANSIColorConsole.red("♥")} HP = ${HP}");
     }
 
     open fun getCard(card: Card) {

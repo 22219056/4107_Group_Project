@@ -88,12 +88,12 @@ class Listener(val hero: Hero) {
     fun askSaveMe(target: Hero, cardByTarget: Card):Boolean{
         if(hero.hasPeachTypeCard()){
             while(true){
-                println("${hero.name}, will you save ${target.name} life?(yes/no)");
+                println("${hero.name}, you want to save ${target.name} life?(yes/no)");
                 var question = readLine();
                 if(question == "yes"){
                     var peachCard = hero.askHeroPlaceACard(listOf("Peach"));
                     hero.removeCard(peachCard);
-                    target.HP += 100;
+                    target.HP += 1;
                     println("you save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
                     return true;
                 }else if(question == "no"){
