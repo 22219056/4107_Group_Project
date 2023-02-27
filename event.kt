@@ -20,8 +20,12 @@ class EventManager {
                 continue;
             if (eventType == "Attack") {
                 if (listener.beAttack(target, card)) {
-                    break
+                    break;
                 }
+            }else if(eventType == "AskSaveMe"){
+                if(listener.askSaveMe(target, card)){
+                    break;
+                };
             }
         }
     }
@@ -70,42 +74,37 @@ class Listener(val hero: Hero) {
                 }
                 println("${hero.name} get hurt hp -1");
                 println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+                if(hero.HP == 0){
+                    println("Asking other heros to save ${hero.name} life by using peach card.");
+                    mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
+                }
                 return false;
             }
         }
 
+    }
 
-//        for (card in hero.cards) {
-//            if (state)
-//                break;
-//
-//            if (card is DodgeCard) {
-//                println("Do you want to place a dodge card?(yes/no)");
-//                while (true) {
-//                    var decision = readLine();
-//                    when (decision) {
-//                        "yes" -> {
-//                            state = true;
-//                            println("${hero.name} dodged attack")
-//                            hero.cards.remove(card);
-//                            break;
-//                        }
-//
-//                        "no" -> break;
-//                        else -> {
-//                            println("invalid input, please input again");
-//                            continue;
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//        if (state == false) {
-//            ANSIColorConsole.printDanger("${hero.name} can't dodge attack.");
-//            (cardByAttacker as AttackCard).active(hero);
-//        }
-//
-//        return state;
+    fun askSaveMe(target: Hero, cardByTarget: Card):Boolean{
+        if(hero.hasPeachTypeCard()){
+            while(true){
+                println("${hero.name}, will you save ${target.name} life?(yes/no)");
+                var question = readLine();
+                if(question == "yes"){
+                    var peachCard = hero.askHeroPlaceACard(listOf("Peach"));
+                    hero.removeCard(peachCard);
+                    target.HP += 100;
+                    println("you save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
+                    return true;
+                }else if(question == "no"){
+                    return false;
+                }else{
+                    println("invalid input, please input again!");
+                    continue;
+                }
+            }
+            return true;
+        }
+        return false
     }
 }

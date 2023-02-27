@@ -3,6 +3,7 @@ package People
 import ANSIColorConsole
 import Card
 import DodgeCard
+import PeachCard
 import Role
 import heros
 import mainEventManager
@@ -30,10 +31,17 @@ abstract class Hero(role: Role):Handler {
     }
 
     //Compulsory
-    open fun askHeroPlaceACard(): Card{
-        println("Please place a card");
+    open fun askHeroPlaceACard(filterList: List<String>? = null): Card{
+        var cardList = mutableListOf<Card>();
+        cardList = if(filterList != null){
+            filterCardFromCards(filterList);
+        }else{
+            cards;
+        }
+
         while(true){
-            this.displayCards();
+            println("Please place a card");
+            this.displayCardFromList(cardList);
             var index = readLine()?.toInt(); //card of index
             if(index !== null && cards.size > index){
                 return cards[index];
@@ -51,13 +59,13 @@ abstract class Hero(role: Role):Handler {
             cards;
         }
 
-        println("Please place a card");
         while(true){
+            println("Please place a card");
             this.displayCardFromList(cardList);
             println("0.[cancel place a card]");
             var index = readLine()?.toInt();
 
-            if(index != 0 && cardList.size > index!!){
+            if(index != 0 && cardList.size >= index!!){
                 return cardList[index-1];
             }
             else if(index == 0){
@@ -72,6 +80,15 @@ abstract class Hero(role: Role):Handler {
     open fun hasDodgeTypeCard(): Boolean{
         for(card in cards){
             if(card is DodgeCard || card.name == "Dodge"){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    open fun hasPeachTypeCard(): Boolean{
+        for(card in cards){
+            if(card is PeachCard || card.name == "Peach"){
                 return true;
             }
         }
