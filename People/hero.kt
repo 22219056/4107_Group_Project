@@ -43,8 +43,8 @@ abstract class Hero(role: Role):Handler {
             println("Please place a card");
             this.displayCardFromList(cardList);
             var index = readLine()?.toInt(); //card of index
-            if(index !== null && cards.size > index){
-                return cards[index];
+            if(index !== null && cards.size >= index && index!! > 0){
+                return cards[index-1];
             }
             println("Not valid input, Please input again.");
             continue;

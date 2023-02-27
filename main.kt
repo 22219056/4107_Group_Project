@@ -60,7 +60,6 @@ class Game {
             var selectedCard =  currentHero.askHeroPlaceACard();
             currentHero.cards.remove(selectedCard);
             println("You discard [${selectedCard.getCardString()}]");
-            currentHero.displayCards();
 
 //            var playerInput = readLine();
 //            var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
