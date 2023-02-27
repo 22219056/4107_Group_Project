@@ -48,7 +48,7 @@ class Deck {
             return Color.values().random();
         }
 
-        fun getRadomCard(): CardList   {
+        fun getRadomCard(): Card  {
             var color = getRandomColor();
             var suit = getRandomSuit();
             var rank = getRandomRank();
