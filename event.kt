@@ -49,6 +49,7 @@ class Listener(val hero: Hero) {
     fun beAttack(target: Hero, cardByAttacker: Card): Boolean {
         //var state: Boolean = false;
         //Check whether the player has a dodge card.
+
         println("${hero.name} is under attack now");
 
         //player has not a dodge card

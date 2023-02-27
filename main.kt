@@ -18,6 +18,8 @@ class Game {
         currentHero.showCurrentHP();
         currentHero.drawPhase(currentHero)
 
+        var attackState:Boolean=true
+
         while (currentHero.cards.size > 0) {
             println("${name}'s turn:");
             currentHero.displayCards();
@@ -26,6 +28,7 @@ class Game {
             var playerInput = readLine();
             if (playerInput == "0") {
                  discardPhase()
+                attackState=true
                 break;
             } else {
                 //player placed a card
@@ -33,7 +36,12 @@ class Game {
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
+                    if(!attackState){
+                        println("You can not attack again\n")
+                        continue
+                    }
                     currentHero.attackEventHandle(cardPlaced);
+                    attackState=false
                     //currentHero.attackEvent(cardPlaced,heros,currentHero.name);
                 }else if(cardPlaced.name=="Peach"){
                     if(currentHero.HP==currentHero.maxHP){
