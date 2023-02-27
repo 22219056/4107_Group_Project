@@ -10,6 +10,7 @@ class Game {
 
     fun judgmentPhase() {}
 
+
     fun mainPhase(name: String) {
 
 
@@ -24,12 +25,12 @@ class Game {
             print("Please select a card: ");
             var playerInput = readLine();
             if (playerInput == "0") {
-//                 discardPhase()
+                 discardPhase()
                 break;
             } else {
                 //player placed a card
                 var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
-                //var cardPlaced = currentHero.askHeroPlaceACard();
+
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
                     currentHero.attackEventHandle(cardPlaced);
