@@ -27,8 +27,8 @@ abstract class Hero(role: Role):Handler {
     abstract var weapons:Card
 
     open fun drawPhase(hero: Hero) {
-        hero.getCard(Deck.getRadomBasicCard())
-        hero.getCard(Deck.getRadomBasicCard())
+        hero.getCard(Deck.getRadomCard())
+        hero.getCard(Deck.getRadomCard())
     }
 
     //Compulsory
