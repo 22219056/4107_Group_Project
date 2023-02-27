@@ -15,13 +15,16 @@ class Game {
 
 
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
-        currentHero.showCurrentHP();
-        currentHero.drawPhase(currentHero)
+
+
 
         var attackState:Boolean=true
 
         while (currentHero.cards.size > 0) {
             println("${name}'s turn:");
+            currentHero.showCurrentHP();
+            currentHero.drawPhase(currentHero)
+            println("EquipmentCard: ${currentHero.weapons?.name}\n")
             currentHero.displayCards();
             print("0.[End of turn]\n");
             print("Please select a card: ");
