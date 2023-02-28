@@ -67,18 +67,35 @@ class PeachCard(color: Color, suit: Suit, rank: Int): BasicCard (){
 }
 
 
-abstract class EquipmentCard: Card{
+abstract class Weapons: Card{
     override val used: Boolean = false;
 
     open fun active(){};
 }
 
-class ZhugeCrossbow(color: Color, suit: Suit, rank: Int): EquipmentCard(){
+
+class ZhugeCrossbow(color: Color, suit: Suit, rank: Int): Weapons(){
     override var name = "Zhuge Crossbow";
     override var color = color;
     override var suit = suit;
     override var rank = rank;
 }
+
+abstract class Armor: Card{
+    override val used: Boolean = false;
+
+    open fun active(){};
+}
+
+class EightTrigrams(color: Color, suit: Suit, rank: Int): Armor(){
+    override var name = "Eight Trigrams";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+}
+
+
+
 
 // abstract class TacticsCard:Card{
 // }

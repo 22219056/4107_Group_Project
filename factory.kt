@@ -57,7 +57,9 @@ class Deck {
                     AttackCard(color, suit, rank),
                     DodgeCard(color, suit, rank),
                     PeachCard(color, suit, rank),
-                    ZhugeCrossbow(Color.Black, Suit.Spade, 1)
+                    ZhugeCrossbow(Color.Black, Suit.Spade, 1),
+                    EightTrigrams(Color.Black, Suit.Spade, 2)
+
 
 
             )

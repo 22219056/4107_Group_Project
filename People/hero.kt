@@ -25,6 +25,7 @@ abstract class Hero(role: Role) : Handler {
     abstract var cards: MutableList<Card>;
     var role: Role = role;
     open var weapons: Card? = null
+    open var armor: Card? = null
 
     open fun drawPhase(hero: Hero) {
         hero.getCard(Deck.getRadomCard())

@@ -19,17 +19,18 @@ class Game {
 
 
         var attackState:Boolean=true
-
+        currentHero.drawPhase(currentHero)
         while (currentHero.cards.size > 0) {
             println("${name}'s turn:");
             currentHero.showCurrentHP();
-            currentHero.drawPhase(currentHero)
-            println("EquipmentCard: ${currentHero.weapons?.name}\n")
+
+            println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
             currentHero.displayCards();
             print("0.[End of turn]\n");
             print("Please select a card: ");
             var playerInput = readLine();
             if (playerInput == "0") {
+                println()
                  discardPhase()
                 attackState=true
                 break;
@@ -55,8 +56,12 @@ class Game {
                         currentHero.removeCard(cardPlaced)
                         currentHero.showCurrentHP()
                     }
-                }else if(cardPlaced is EquipmentCard){
+                }else if(cardPlaced is Weapons){
                     currentHero.weapons=cardPlaced
+
+                }else if(cardPlaced is Armor){
+                    currentHero.armor=cardPlaced
+
                 }
                 currentHero.removeCard(cardPlaced);
             }

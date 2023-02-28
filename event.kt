@@ -1,8 +1,9 @@
 import People.Hero
 
-enum class EventType{
+enum class EventType {
     Attack
 }
+
 class EventManager {
     var listeners: MutableList<Listener> = mutableListOf();
 
@@ -22,18 +23,18 @@ class EventManager {
                 if (listener.beAttack(target, card)) {
                     break;
                 }
-            }else if(eventType == "AskSaveMe"){
-                if(listener.askSaveMe(target, card)){
+            } else if (eventType == "AskSaveMe") {
+                if (listener.askSaveMe(target, card)) {
                     break;
                 };
             }
         }
     }
 
-    fun notifySpecificListener(eventType: String, target: Hero, specificHero: Hero, card: Card){
+    fun notifySpecificListener(eventType: String, target: Hero, specificHero: Hero, card: Card) {
         for (listener in listeners) {
-            if(listener.hero == specificHero){
-                if(eventType == "Attack"){
+            if (listener.hero == specificHero) {
+                if (eventType == "Attack") {
                     listener.beAttack(target, card);
                 }
                 break;
@@ -53,8 +54,18 @@ class Listener(val hero: Hero) {
         println("${hero.name} is under attack now");
 
         //player has not a dodge card
-        if(!hero.hasDodgeTypeCard()){
-            if(hero.HP > 0){
+        if (hero.armor?.name !=null) {
+            if (Deck.getRadomCard().color.equals(Color.Red)) {
+                println("${hero.name} use  Eight Trigrams to judgment get red card, therefore, hero can dodge the attack\n")
+                return true
+            }else{
+                println("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")
+            }
+
+        }
+
+        if (!hero.hasDodgeTypeCard()) {
+            if (hero.HP > 0) {
                 hero.HP -= 1;
             }
             ANSIColorConsole.printDanger("${hero.name} can't dodge this attack as ${hero.name} don't have a dodge card.");
@@ -63,20 +74,20 @@ class Listener(val hero: Hero) {
             return false;
         }
 
-        while(true){
+        while (true) {
             var selectedDodgeCard = hero.askHeroPlaceACardOrNot(listOf("Dodge"));
-            if(selectedDodgeCard is DodgeCard){
+            if (selectedDodgeCard is DodgeCard) {
                 hero.removeCard(selectedDodgeCard);
                 println("${hero.name} dodged the attack");
                 return true;
-            }else{
-                if(hero.HP > 0){
+            } else {
+                if (hero.HP > 0) {
                     hero.HP -= 1;
                 }
                 println("${hero.name} get hurt hp -1");
                 println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
 
-                if(hero.HP == 0){
+                if (hero.HP == 0) {
                     println("Asking other heros to save ${hero.name} life by using peach card.");
                     mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
                 }
@@ -84,22 +95,23 @@ class Listener(val hero: Hero) {
             }
         }
 
+
     }
 
-    fun askSaveMe(target: Hero, cardByTarget: Card):Boolean{
-        if(hero.hasPeachTypeCard()){
-            while(true){
+    fun askSaveMe(target: Hero, cardByTarget: Card): Boolean {
+        if (hero.hasPeachTypeCard()) {
+            while (true) {
                 println("${hero.name}, you want to save ${target.name} life?(yes/no)");
                 var question = readLine();
-                if(question == "yes"){
+                if (question == "yes") {
                     var peachCard = hero.askHeroPlaceACard(listOf("Peach"));
                     hero.removeCard(peachCard);
                     target.HP += 1;
                     println("you save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
                     return true;
-                }else if(question == "no"){
+                } else if (question == "no") {
                     return false;
-                }else{
+                } else {
                     println("invalid input, please input again!");
                     continue;
                 }
