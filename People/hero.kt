@@ -7,6 +7,8 @@ import PeachCard
 import Role
 import heros
 import mainEventManager
+import java.util.ArrayDeque
+import javax.swing.text.StyledEditorKit.BoldAction
 
 enum class Gender {
     Male, Female;
@@ -26,6 +28,16 @@ abstract class Hero(role: Role) : Handler {
     var role: Role = role;
     open var weapons: Card? = null
     open var armor: Card? = null
+    var judgmentZone = ArrayDeque<Card>()
+    var judgmentFlag:Boolean = false
+    open fun setJudgmentZone(card:Card){
+        judgmentZone.push(card)
+    }
+
+    open fun getJudgmentZone():Boolean{
+        if(!judgmentZone.isEmpty()) return true // need to have judgment
+        return this.judgmentFlag
+    }
 
     open fun drawPhase(hero: Hero) {
         hero.getCard(Deck.getRadomCard())
@@ -163,6 +175,26 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+
+    open fun acediaEventHandle(placedCard: Card) {
+        println("Please select a hero you want to place the Acedia");
+
+        //show list of hero
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+            }
+        }
+
+        //selected by attacker
+        var index = readlnOrNull()?.toInt();
+        if (index != null) {
+           availableHeroes[index].setJudgmentZone(placedCard)
+        }
+    }
+
     open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
         println("Select you want to attack role")
 
@@ -234,18 +266,3 @@ abstract class Hero(role: Role) : Handler {
 
 }
 
-//class LiuBei(role: Role) : Hero(role) {
-//    override var name = "Liu Bei";
-//    override var HP = 4;
-//    override var maxHP = 4;
-//    override var gender = Gender.Male;
-//    override var cards = mutableListOf<Card>();
-//}
-//
-//class GuanYu(role: Role) : Hero(role) {
-//    override var name = "Guan Yu";
-//    override var HP = 4;
-//    override var maxHP = 4;
-//    override var gender = Gender.Male;
-//    override var cards = mutableListOf<Card>();
-//}

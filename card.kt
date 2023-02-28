@@ -39,6 +39,23 @@ abstract class BasicCard : Card{
     open fun active(){};
 }
 
+abstract class TacticsCard : Card{
+    override val used: Boolean = false;
+
+    open fun active(){};
+}
+
+class AcediaCard(color: Color, suit: Suit, rank: Int):TacticsCard(){
+    override var name = "Acedia";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    fun active(targetHero: Hero){
+        targetHero.setJudgmentZone(this)
+    }
+}
+
 class AttackCard(color: Color, suit: Suit, rank: Int): BasicCard (){
     override var name = "Attack";
     override var color = color;

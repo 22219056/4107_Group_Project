@@ -21,6 +21,11 @@ class Game {
         var attackState:Boolean=true
         currentHero.drawPhase(currentHero)
         while (currentHero.cards.size > 0) {
+
+            if(currentHero.getJudgmentZone()){
+                println("need to have judement")
+            }
+
             println("${name}'s turn:");
             currentHero.showCurrentHP();
 
@@ -62,6 +67,8 @@ class Game {
                 }else if(cardPlaced is Armor){
                     currentHero.armor=cardPlaced
 
+                }else if (cardPlaced is AcediaCard){
+                    currentHero.acediaEventHandle(cardPlaced)
                 }
                 currentHero.removeCard(cardPlaced);
             }
