@@ -2,6 +2,7 @@ package People
 
 import ANSIColorConsole
 import Card
+import Deck
 import DodgeCard
 import PeachCard
 import Role
@@ -30,6 +31,7 @@ abstract class Hero(role: Role) : Handler {
     open var armor: Card? = null
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag:Boolean = false
+    var abandonRound: Boolean = false
     open fun setJudgmentZone(card:Card){
         judgmentZone.push(card)
     }
@@ -43,7 +45,9 @@ abstract class Hero(role: Role) : Handler {
         hero.getCard(Deck.getRadomCard())
         hero.getCard(Deck.getRadomCard())
     }
-
+    open fun getJudgement():Card{
+        return  Deck.getRadomCard()
+    }
     //Compulsory
     open fun askHeroPlaceACard(filterList: List<String>? = null): Card {
         var cardList = mutableListOf<Card>();
@@ -194,6 +198,8 @@ abstract class Hero(role: Role) : Handler {
            availableHeroes[index].setJudgmentZone(placedCard)
         }
     }
+
+
 
     open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
         println("Select you want to attack role")

@@ -23,7 +23,13 @@ class Game {
         while (currentHero.cards.size > 0) {
 
             if(currentHero.getJudgmentZone()){
-                println("need to have judement")
+                currentHero.judgmentZone.pop().active(currentHero,currentHero.getJudgement())
+                if(currentHero.abandonRound){
+                    println("hero abandoned")
+                    discardPhase()
+                    break;
+
+                }
             }
 
             println("${name}'s turn:");
