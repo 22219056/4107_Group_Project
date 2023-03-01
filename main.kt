@@ -17,14 +17,13 @@ class Game {
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
 
 
-
-        var attackState:Boolean=true
+        var attackState: Boolean = true
         currentHero.drawPhase(currentHero)
         while (currentHero.cards.size > 0) {
 
-            if(currentHero.getJudgmentZone()){
-                currentHero.judgmentZone.pop().active(currentHero,currentHero.getJudgement())
-                if(currentHero.abandonRound){
+            if (currentHero.getJudgmentZone()) {
+                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
+                if (currentHero.abandonRound) {
                     println("hero abandoned")
                     discardPhase()
                     break;
@@ -42,8 +41,8 @@ class Game {
             var playerInput = readLine();
             if (playerInput == "0") {
                 println()
-                 discardPhase()
-                attackState=true
+                discardPhase()
+                attackState = true
                 break;
             } else {
                 //player placed a card
@@ -51,30 +50,32 @@ class Game {
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
-                    if(!attackState && !currentHero.weapons?.name.equals("Zhuge Crossbow")){
+                    if (!attackState && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
                         println("You can not attack again\n")
                         continue
                     }
                     currentHero.attackEventHandle(cardPlaced);
-                    attackState=false
+                    attackState = false
 
-                }else if(cardPlaced.name=="Peach"){
-                    if(currentHero.HP==currentHero.maxHP){
+                } else if (cardPlaced.name == "Peach") {
+                    if (currentHero.HP == currentHero.maxHP) {
                         println("You HP is max, please you again select other card")
                         continue
-                    }else{
-                        currentHero.HP+=1
+                    } else {
+                        currentHero.HP += 1
                         currentHero.removeCard(cardPlaced)
                         currentHero.showCurrentHP()
                     }
-                }else if(cardPlaced is Weapons){
-                    currentHero.weapons=cardPlaced
+                } else if (cardPlaced is Weapons) {
+                    currentHero.weapons = cardPlaced
 
-                }else if(cardPlaced is Armor){
-                    currentHero.armor=cardPlaced
+                } else if (cardPlaced is Armor) {
+                    currentHero.armor = cardPlaced
 
-                }else if (cardPlaced is AcediaCard){
+                } else if (cardPlaced is AcediaCard) {
                     currentHero.acediaEventHandle(cardPlaced)
+                } else if (cardPlaced is BarbariansAssault) {
+                    currentHero.barbariansAssaultHandle(cardPlaced)
                 }
                 currentHero.removeCard(cardPlaced);
             }
@@ -83,12 +84,11 @@ class Game {
     }
 
 
-
     fun discardPhase() {
 
         while (currentHero.cards.size > currentHero.HP) {
             println("You need to discard ${currentHero.cards.size - currentHero.HP}")
-            var selectedCard =  currentHero.askHeroPlaceACard();
+            var selectedCard = currentHero.askHeroPlaceACard();
             currentHero.cards.remove(selectedCard);
             println("You discard [${selectedCard.getCardString()}]");
 
@@ -107,16 +107,16 @@ class Game {
     }
 
     fun start() {
-    while(true){
-        for (hero in heros) {
-            currentHero = hero;
-            startPhase();
-            mainPhase("${hero.name}");
-            endPhase();
-            println();
+        while (true) {
+            for (hero in heros) {
+                currentHero = hero;
+                startPhase();
+                mainPhase("${hero.name}");
+                endPhase();
+                println();
 
+            }
         }
-    }
 
     }
 

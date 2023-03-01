@@ -1,6 +1,7 @@
 package People
 
 import ANSIColorConsole
+import AttackCard
 import Card
 import Deck
 import DodgeCard
@@ -104,6 +105,15 @@ abstract class Hero(role: Role) : Handler {
         return false;
     }
 
+    open fun hasAttackTypeCard(): Boolean {
+        for (card in cards) {
+            if (card is AttackCard || card.name == "Attack") {
+                return true;
+            }
+        }
+        return false;
+    }
+
     open fun hasPeachTypeCard(): Boolean {
         for (card in cards) {
             if (card is PeachCard || card.name == "Peach") {
@@ -177,6 +187,22 @@ abstract class Hero(role: Role) : Handler {
         if (index != null) {
             mainEventManager.notifySpecificListener("Attack", this, availableHeroes[index], placedCard);
         }
+    }
+
+    open fun barbariansAssaultHandle(placedCard: Card){
+        println("${this.name} use ${placedCard.name}, all hero need to use attack card to dodge the hurt\n")
+
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+//                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+
+            }
+        }
+        mainEventManager.notifyAllHero("barbariansAssault", this,placedCard);
+
+
     }
 
 

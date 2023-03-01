@@ -31,6 +31,20 @@ class EventManager {
         }
     }
 
+    fun notifyAllHero(eventType: String, target: Hero,card: Card) {
+        for (listener in listeners) {
+            if (listener.hero != target) {
+                if (eventType == "barbariansAssault") {
+//                listener.blockBarbariansAssault(hero,card)
+
+                    listener.blockBarbariansAssault(listener.hero,card)
+                }
+
+            }
+        }
+    }
+
+
     fun notifySpecificListener(eventType: String, target: Hero, specificHero: Hero, card: Card) {
         for (listener in listeners) {
             if (listener.hero == specificHero) {
@@ -41,6 +55,8 @@ class EventManager {
             }
         }
     }
+
+
 }
 
 
@@ -54,11 +70,11 @@ class Listener(val hero: Hero) {
         println("${hero.name} is under attack now");
 
         //player has not a dodge card
-        if (hero.armor?.name !=null) {
+        if (hero.armor?.name != null) {
             if (Deck.getRadomCard().color.equals(Color.Red)) {
                 println("${hero.name} use  Eight Trigrams to judgment get red card, therefore, hero can dodge the attack\n")
                 return true
-            }else{
+            } else {
                 println("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")
             }
 
@@ -96,6 +112,47 @@ class Listener(val hero: Hero) {
         }
 
 
+    }
+
+
+    fun blockBarbariansAssault(target: Hero,cardByAttacker: Card):Boolean{
+        if(target.hasAttackTypeCard()){
+            while (true) {
+                println("${target.name}")
+                var selectedDodgeCard = hero.askHeroPlaceACardOrNot(listOf("Attack"));
+                if (selectedDodgeCard is AttackCard) {
+                    hero.removeCard(selectedDodgeCard);
+                    println("${hero.name} dodged the Barbarians Assault of hurt");
+                    return true;
+                } else {
+                    if (hero.HP > 0) {
+                        hero.HP -= 1;
+                    }
+                    println("${ANSIColorConsole.red("${hero.name} give up / without attack card, ${hero.name} can not dodged the Barbarians Assault of hurt")}")
+                    println("${hero.name} get hurt hp -1");
+                    println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+                    if (hero.HP == 0) {
+                        println("Asking other heros to save ${hero.name} life by using peach card.");
+                        mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
+                    }
+                    return false;
+                }
+            }
+        }else{
+            if (hero.HP > 0) {
+                hero.HP -= 1;
+            }
+            println("${ANSIColorConsole.red("${hero.name} without attack card, ${hero.name} can not dodged the Barbarians Assault of hurt")}")
+            println("${hero.name} get hurt hp -1");
+            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+            if (hero.HP == 0) {
+                println("Asking other heros to save ${hero.name} life by using peach card.");
+                mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
+            }
+        }
+        return false
     }
 
     fun askSaveMe(target: Hero, cardByTarget: Card): Boolean {

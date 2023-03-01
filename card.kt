@@ -63,6 +63,15 @@ class AcediaCard(color: Color, suit: Suit, rank: Int):TacticsCard(){
     }
 }
 
+class BarbariansAssault(color: Color, suit: Suit, rank: Int):TacticsCard(){
+    override var name = "Barbarians Assault";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
 class AttackCard(color: Color, suit: Suit, rank: Int): BasicCard (){
     override var name = "Attack";
     override var color = color;

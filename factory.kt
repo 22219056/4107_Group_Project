@@ -59,7 +59,8 @@ class Deck {
                     PeachCard(color, suit, rank),
                     ZhugeCrossbow(Color.Black, Suit.Spade, 1),
                     EightTrigrams(Color.Black, Suit.Spade, 2),
-                    AcediaCard(Color.Red, Suit.Heart,6)
+                    AcediaCard(Color.Red, Suit.Heart,6),
+                    BarbariansAssault(Color.Black,Suit.Club,7)
 
 
 
