@@ -76,7 +76,16 @@ class Game {
                     currentHero.acediaEventHandle(cardPlaced)
                 } else if (cardPlaced is BarbariansAssault) {
                     currentHero.barbariansAssaultHandle(cardPlaced)
+                } else if (cardPlaced is HailofArrows) {
+                    currentHero.HailofArrowsHandle(cardPlaced)
+                } else if (cardPlaced is SleightofHand) {
+                    for (i in 1..2) {
+                        currentHero.getCard(Deck.getRadomCard())
+                    }
+                }else if(cardPlaced is Duel){
+                    currentHero.duelHandle(cardPlaced)
                 }
+
                 currentHero.removeCard(cardPlaced);
             }
             println()

@@ -189,8 +189,27 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+    open fun duelHandle(placedCard: Card) {
+        println("Please select a hero you want to duel");
+
+        //show list of hero
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+            }
+        }
+
+        //selected by attacker
+        var index = readlnOrNull()?.toInt();
+        if (index != null) {
+            mainEventManager.notifySpecificListener("Duel", this, availableHeroes[index], placedCard);
+        }
+    }
+
     open fun barbariansAssaultHandle(placedCard: Card){
-        println("${this.name} use ${placedCard.name}, all hero need to use attack card to dodge the hurt\n")
+        println("${this.name} use ${placedCard.name}, all hero need to use [Attack] card to dodge the hurt\n")
 
         var availableHeroes = listOf<Hero>();
         for ((index, hero) in heros.withIndex()) {
@@ -201,6 +220,21 @@ abstract class Hero(role: Role) : Handler {
             }
         }
         mainEventManager.notifyAllHero("barbariansAssault", this,placedCard);
+
+
+    }
+
+    open fun HailofArrowsHandle(placedCard: Card){
+        println("${this.name} use ${placedCard.name}, all hero need to use [Dodge] card to dodge the hurt\n")
+
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+                availableHeroes += hero;
+
+            }
+        }
+        mainEventManager.notifyAllHero("hailofArrowsAssault", this,placedCard);
 
 
     }

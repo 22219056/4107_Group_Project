@@ -60,7 +60,10 @@ class Deck {
                     ZhugeCrossbow(Color.Black, Suit.Spade, 1),
                     EightTrigrams(Color.Black, Suit.Spade, 2),
                     AcediaCard(Color.Red, Suit.Heart,6),
-                    BarbariansAssault(Color.Black,Suit.Club,7)
+                    BarbariansAssault(Color.Black,Suit.Club,7),
+                    HailofArrows(Color.Red,Suit.Heart,1),
+                    SleightofHand(Color.Red,Suit.Heart,7),
+                    Duel(Color.Black,Suit.Spade,1)
 
 
 
