@@ -63,7 +63,8 @@ class Deck {
                     BarbariansAssault(Color.Black,Suit.Club,7),
                     HailofArrows(Color.Red,Suit.Heart,1),
                     SleightofHand(Color.Red,Suit.Heart,7),
-                    Duel(Color.Black,Suit.Spade,1)
+                    Duel(Color.Black,Suit.Spade,1),
+                    lightningBolt(Color.Black, Suit.Spade,1)
 
 
 

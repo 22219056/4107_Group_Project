@@ -64,6 +64,24 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Lightning Bolt";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    override fun active(targetHero: Hero, judgement: Card) {
+        println("judgement card is" + judgement.getCardString())
+
+        if (judgement.suit.equals("♠") && judgement.rank <= 9 && judgement.rank >= 2) {
+            targetHero.HP -= 3
+        } else {
+            targetHero.abandonRound = true
+        }
+
+    }
+}
+
 class BarbariansAssault(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Barbarians Assault";
     override var color = color;
