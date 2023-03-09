@@ -64,6 +64,15 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Plifer";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
 class BarbariansAssault(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Barbarians Assault";
     override var color = color;
@@ -89,6 +98,13 @@ class SleightofHand(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var rank = rank;
 
 
+}
+
+class OathOfPeachGarden(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Oath of Peach Garden";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
 }
 
 class Duel(color: Color, suit: Suit, rank: Int) : TacticsCard() {
@@ -153,6 +169,8 @@ class EightTrigrams(color: Color, suit: Suit, rank: Int) : Armor() {
     override var suit = suit;
     override var rank = rank;
 }
+
+
 
 
 // abstract class TacticsCard:Card{
