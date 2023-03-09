@@ -65,8 +65,8 @@ class Deck {
 //                    SleightofHand(Color.Red,Suit.Heart,7),
 //                    Duel(Color.Black,Suit.Spade,1),
 //                    lightningBolt(Color.Black, Suit.Spade,1)
-
-                Plifer(Color.Red, Suit.Spade, 4),
+                OathOfPeachGarden(Color.Red, Suit.Heart, 1),
+//                Plifer(Color.Red, Suit.Spade, 4),
                         AzureDragonCrescentBlade(Color.Black,Suit.Spade,5)
 
             )
