@@ -15,9 +15,7 @@ class Game {
 
 
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
-
-
-        var attackState: Boolean = true
+        currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
 //  dont del      val numbersIterator = heros.iterator().next()
 //  dont del      print(numbersIterator.name +" hello world ")
@@ -43,7 +41,6 @@ class Game {
             if (playerInput == "0") {
                 println()
                 discardPhase()
-                attackState = true
                 break;
             } else {
                 //player placed a card
@@ -51,12 +48,12 @@ class Game {
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
-                    if (!attackState && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
+                    if (!currentHero.canAttack && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
                         println("You can not attack again\n")
                         continue
                     }
                     currentHero.attackEventHandle(cardPlaced);
-                    attackState = false
+                    currentHero.canAttack = false;
 
                 } else if (cardPlaced.name == "Peach") {
                     if (currentHero.HP == currentHero.maxHP) {
@@ -93,9 +90,7 @@ class Game {
         }
     }
 
-
     fun discardPhase() {
-
         while (currentHero.cards.size > currentHero.HP) {
             println("You need to discard ${currentHero.cards.size - currentHero.HP}")
             var selectedCard = currentHero.askHeroPlaceACard();

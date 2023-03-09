@@ -35,8 +35,6 @@ class EventManager {
         for (listener in listeners) {
             if (listener.hero != target) {
                 if (eventType == "barbariansAssault") {
-
-
                     listener.blockBarbariansAssault(listener.hero, card)
                 } else if (eventType == "hailofArrowsAssault") {
                     listener.blockHailofArrows(listener.hero, card)
@@ -59,8 +57,6 @@ class EventManager {
             }
         }
     }
-
-
 }
 
 
@@ -68,9 +64,7 @@ class Listener(val hero: Hero) {
 
     //if the affect successfully return true otherwise return false
     fun beAttack(target: Hero, cardByAttacker: Card): Boolean {
-        //var state: Boolean = false;
         //Check whether the player has a dodge card.
-
         println("${hero.name} is under attack now");
 
         //player has not a dodge card
@@ -99,6 +93,15 @@ class Listener(val hero: Hero) {
             if (selectedDodgeCard is DodgeCard) {
                 hero.removeCard(selectedDodgeCard);
                 println("${hero.name} dodged the attack");
+
+                //compulsory use attack card when attacker equipped AzureDragonCrescentBlade weapon
+                if(target.weapons is AzureDragonCrescentBlade && target.hasAttackTypeCard()){
+                    println("Active effect of Azure Dragon Crescent Blade weapon, can attack again");
+                    mainEventManager.notifySpecificListener("Attack",target,hero,cardByAttacker);
+                }
+
+
+
                 return true;
             } else {
                 if (hero.HP > 0) {
@@ -188,8 +191,6 @@ class Listener(val hero: Hero) {
                 }
             }
         }
-
-
 
     fun blockBarbariansAssault(target: Hero, cardByAttacker: Card): Boolean {
 
@@ -305,4 +306,6 @@ class Listener(val hero: Hero) {
         }
         return false
     }
+
+
 }

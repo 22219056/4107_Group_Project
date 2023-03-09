@@ -27,7 +27,6 @@ class CardFactory(var heros: List<Hero>) {
         for (hero in heros) {
             for (i in 1..4)
                 hero.getCard(Deck.getRadomCard());
-
         }
     }
 
@@ -64,10 +63,8 @@ class Deck {
                     HailofArrows(Color.Red,Suit.Heart,1),
                     SleightofHand(Color.Red,Suit.Heart,7),
                     Duel(Color.Black,Suit.Spade,1),
-                    lightningBolt(Color.Black, Suit.Spade,1)
-
-
-
+                    lightningBolt(Color.Black, Suit.Spade,1) ,
+                    AzureDragonCrescentBlade(Color.Black,Suit.Spade,5)
             )
 
             return cardList.random();

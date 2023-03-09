@@ -33,6 +33,8 @@ abstract class Hero(role: Role) : Handler {
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag:Boolean = false
     var abandonRound: Boolean = false
+
+    var canAttack: Boolean = true;
     open fun setJudgmentZone(card:Card){
         judgmentZone.push(card)
     }
@@ -149,7 +151,6 @@ abstract class Hero(role: Role) : Handler {
             println("${index + 1}.[${card.getCardString()}] ");
         }
     }
-
 
     open fun showCurrentHP() {
         println("$name ${ANSIColorConsole.red("♥")} HP = ${HP}");

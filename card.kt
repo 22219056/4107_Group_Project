@@ -159,6 +159,13 @@ class ZhugeCrossbow(color: Color, suit: Suit, rank: Int) : Weapons() {
     override var rank = rank;
 }
 
+class AzureDragonCrescentBlade(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Azure Dragon Crescent Blade"
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+}
+
 abstract class Armor : Card {
     override val used: Boolean = false;
 
