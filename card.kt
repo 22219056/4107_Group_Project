@@ -64,6 +64,24 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Lightning Bolt";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    override fun active(targetHero: Hero, judgement: Card) {
+        println("judgement card is" + judgement.getCardString())
+
+        if (judgement.suit.equals("♠") && judgement.rank <= 9 && judgement.rank >= 2) {
+            targetHero.HP -= 3
+        } else {
+            targetHero.abandonRound = true
+        }
+
+    }
+}
+
 class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Plifer";
     override var color = color;
@@ -98,13 +116,6 @@ class SleightofHand(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var rank = rank;
 
 
-}
-
-class OathOfPeachGarden(color: Color, suit: Suit, rank: Int) : TacticsCard() {
-    override var name = "Oath of Peach Garden";
-    override var color = color;
-    override var suit = suit;
-    override var rank = rank;
 }
 
 class Duel(color: Color, suit: Suit, rank: Int) : TacticsCard() {
@@ -169,8 +180,6 @@ class EightTrigrams(color: Color, suit: Suit, rank: Int) : Armor() {
     override var suit = suit;
     override var rank = rank;
 }
-
-
 
 
 // abstract class TacticsCard:Card{

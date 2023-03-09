@@ -19,6 +19,8 @@ class Game {
 
         var attackState: Boolean = true
         currentHero.drawPhase(currentHero)
+//  dont del      val numbersIterator = heros.iterator().next()
+//  dont del      print(numbersIterator.name +" hello world ")
         while (currentHero.cards.size > 0) {
 
             if (currentHero.getJudgmentZone()) {
@@ -27,7 +29,6 @@ class Game {
                     println("hero abandoned")
                     discardPhase()
                     break;
-
                 }
             }
 
