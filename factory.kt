@@ -27,6 +27,7 @@ class CardFactory(var heros: List<Hero>) {
         for (hero in heros) {
             for (i in 1..4)
                 hero.getCard(Deck.getRadomCard());
+
         }
     }
 
@@ -54,17 +55,20 @@ class Deck {
 
             var cardList = listOf(
                     AttackCard(color, suit, rank),
-                    DodgeCard(color, suit, rank),
-                    PeachCard(color, suit, rank),
-                    ZhugeCrossbow(Color.Black, Suit.Spade, 1),
-                    EightTrigrams(Color.Black, Suit.Spade, 2),
-                    AcediaCard(Color.Red, Suit.Heart,6),
-                    BarbariansAssault(Color.Black,Suit.Club,7),
-                    HailofArrows(Color.Red,Suit.Heart,1),
-                    SleightofHand(Color.Red,Suit.Heart,7),
-                    Duel(Color.Black,Suit.Spade,1),
-                    lightningBolt(Color.Black, Suit.Spade,1) ,
-                    AzureDragonCrescentBlade(Color.Black,Suit.Spade,5)
+//                    DodgeCard(color, suit, rank),
+//                    PeachCard(color, suit, rank),
+//                    ZhugeCrossbow(Color.Black, Suit.Spade, 1),
+//                    EightTrigrams(Color.Black, Suit.Spade, 2),
+//                    AcediaCard(Color.Red, Suit.Heart,6),
+//                    BarbariansAssault(Color.Black,Suit.Club,7),
+//                    HailofArrows(Color.Red,Suit.Heart,1),
+//                    SleightofHand(Color.Red,Suit.Heart,7),
+//                    Duel(Color.Black,Suit.Spade,1),
+//                    lightningBolt(Color.Black, Suit.Spade,1)
+
+                Plifer(Color.Red, Suit.Spade, 4),
+                        AzureDragonCrescentBlade(Color.Black,Suit.Spade,5)
+
             )
 
             return cardList.random();

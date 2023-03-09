@@ -82,6 +82,15 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Plifer";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
 class BarbariansAssault(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Barbarians Assault";
     override var color = color;

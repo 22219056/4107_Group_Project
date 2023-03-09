@@ -82,6 +82,11 @@ class Game {
                     }
                 }else if(cardPlaced is Duel){
                     currentHero.duelHandle(cardPlaced)
+                }else if(cardPlaced is OathOfPeachGarden){
+//                    currentHero.oathOfPeachGardenHandle(cardPlaced)
+                   mainEventManager.notifyAllHero("oathOfPeachGarden",cardPlaced)
+                }else if(cardPlaced is Plifer){
+                    currentHero.PliferHandle(cardPlaced)
                 }
 
                 currentHero.removeCard(cardPlaced);

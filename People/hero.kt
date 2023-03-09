@@ -171,6 +171,25 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+    open fun PliferHandle(placedCard: Card){
+        println("Please select a hero you want to take her/his card");
+
+        //show list of hero
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+            }
+        }
+
+        //selected by attacker
+        var index = readlnOrNull()?.toInt();
+        if (index != null) {
+            mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
+        }
+    }
+
     open fun attackEventHandle(placedCard: Card) {
         println("Please select a hero you want to attack");
 
@@ -220,7 +239,7 @@ abstract class Hero(role: Role) : Handler {
 
             }
         }
-        mainEventManager.notifyAllHero("barbariansAssault", this,placedCard);
+        mainEventManager.notifyListener("barbariansAssault", this,placedCard);
 
 
     }
@@ -235,7 +254,7 @@ abstract class Hero(role: Role) : Handler {
 
             }
         }
-        mainEventManager.notifyAllHero("hailofArrowsAssault", this,placedCard);
+        mainEventManager.notifyListener("hailofArrowsAssault", this,placedCard);
 
 
     }
@@ -262,25 +281,27 @@ abstract class Hero(role: Role) : Handler {
 
 
 
-    open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
-        println("Select you want to attack role")
 
-        showRoleList(heros, currentHero)
-        var commandInput = readLine();
+//    open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
+//        println("Select you want to attack role")
+//
+//        showRoleList(heros, currentHero)
+//        var commandInput = readLine();
+//
+//        for ((index, hero) in heros.withIndex()) {
+//            if (commandInput.equals("${(index + 1).toString()}")) {
+//                println("You select attack ${hero.name}\n")
+//
+////                println("${hero.name} need to make a decision, please select a card:")
+//                dodgeEvent(heros, hero.name)
+////                hero.displayCards()
+////                commandInput = readLine();
+//            }
+//        }
+//
+////        mainEventManager.notifyListener("Attack", this, placedCard);
+//    }
 
-        for ((index, hero) in heros.withIndex()) {
-            if (commandInput.equals("${(index + 1).toString()}")) {
-                println("You select attack ${hero.name}\n")
-
-//                println("${hero.name} need to make a decision, please select a card:")
-                dodgeEvent(heros, hero.name)
-//                hero.displayCards()
-//                commandInput = readLine();
-            }
-        }
-
-//        mainEventManager.notifyListener("Attack", this, placedCard);
-    }
 
     open fun dodgeEvent(heros: List<Hero>, beAttackedHero: String) {
 

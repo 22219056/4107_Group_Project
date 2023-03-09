@@ -15,7 +15,7 @@ class EventManager {
         listeners.remove(listener);
     }
 
-    fun notifyListener(eventType: String, target: Hero, card: Card, continuable: Boolean = false) {
+    fun notifyListener(eventType: String, target: Hero, card: Card) {
         for (listener in listeners) {
             if (listener.hero == target) //Avoid using effects that affect the hero themselves
                 continue;
@@ -27,19 +27,18 @@ class EventManager {
                 if (listener.askSaveMe(target, card)) {
                     break;
                 };
+            } else if (eventType == "barbariansAssault") {
+                listener.blockBarbariansAssault(listener.hero, card)
+            } else if (eventType == "hailofArrowsAssault") {
+                listener.blockHailofArrows(listener.hero, card)
             }
         }
     }
 
-    fun notifyAllHero(eventType: String, target: Hero, card: Card) {
+    fun notifyAllHero(eventType: String, card: Card) {
         for (listener in listeners) {
-            if (listener.hero != target) {
-                if (eventType == "barbariansAssault") {
-                    listener.blockBarbariansAssault(listener.hero, card)
-                } else if (eventType == "hailofArrowsAssault") {
-                    listener.blockHailofArrows(listener.hero, card)
-                }
-
+            if (eventType == "oathOfPeachGarden") {
+                listener.allheroGiveHealth(listener.hero, card)
             }
         }
     }
@@ -57,6 +56,8 @@ class EventManager {
             }
         }
     }
+
+
 }
 
 
@@ -64,7 +65,9 @@ class Listener(val hero: Hero) {
 
     //if the affect successfully return true otherwise return false
     fun beAttack(target: Hero, cardByAttacker: Card): Boolean {
+        //var state: Boolean = false;
         //Check whether the player has a dodge card.
+
         println("${hero.name} is under attack now");
 
         //player has not a dodge card
@@ -121,6 +124,42 @@ class Listener(val hero: Hero) {
 
     }
 
+    fun allheroGiveHealth(target: Hero, card: Card): Boolean {
+        if (hero.HP < hero.maxHP) {
+            hero.HP += 1
+            println("\n${ANSIColorConsole.red("${hero.name} hp increase one")}");
+            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+            return true
+        } else {
+            println("\n${ANSIColorConsole.red("${hero.name} can not than max hp")}");
+            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+            return false
+        }
+    }
+
+    fun toPlifer(target: Hero, cardByAttacker: Card): Boolean {
+
+
+        while (true) {
+            println("${hero.name}")
+            println("Please place a card to take");
+            hero.displayCardFromList(hero.cards)
+            var index = readLine()?.toInt();
+            if (index != 0 && hero.cards.size >= index!!) {
+
+                //take target hero card
+                target.getCard(hero.cards[index - 1])
+
+                hero.removeCard(hero.cards[index - 1])
+
+                return true
+            }
+            println("Not valid input, Please input again.");
+            continue;
+        }
+//        return true
+    }
+
     fun toDuel(target: Hero, cardByAttacker: Card): Boolean {
         while (true) {
             if (hero.hasAttackTypeCard()) {
@@ -143,7 +182,7 @@ class Listener(val hero: Hero) {
                     }
                     return false;
                 }
-            }else{
+            } else {
                 hero.HP -= 1;
                 println("${hero.name} without attack card")
                 println("${hero.name} get hurt hp -1");
@@ -156,30 +195,17 @@ class Listener(val hero: Hero) {
                 return false;
             }
 
-                if (target.hasAttackTypeCard()) {
-                    println(target.name)
-                    var selectedAttackCard = target.askHeroPlaceACardOrNot(listOf("Attack"));
-                    if (selectedAttackCard is AttackCard) {
-                        target.removeCard(selectedAttackCard);
-                        println("${target.name} use attack card\n");
+            if (target.hasAttackTypeCard()) {
+                println(target.name)
+                var selectedAttackCard = target.askHeroPlaceACardOrNot(listOf("Attack"));
+                if (selectedAttackCard is AttackCard) {
+                    target.removeCard(selectedAttackCard);
+                    println("${target.name} use attack card\n");
 
-                    } else {
-                        if (target.HP > 0) {
-                            target.HP -= 1;
-                        }
-                        println("${target.name} get hurt hp -1");
-                        println("${target.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
-
-                        if (target.HP == 0) {
-                            println("Asking other heros to save ${target.name} life by using peach card.");
-                            mainEventManager.notifyListener("AskSaveMe", target, cardByAttacker);
-                        }
-                        return false;
+                } else {
+                    if (target.HP > 0) {
+                        target.HP -= 1;
                     }
-
-                } else{
-                    target.HP -= 1;
-                    println("${target.name} without attack card")
                     println("${target.name} get hurt hp -1");
                     println("${target.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
 
@@ -189,8 +215,23 @@ class Listener(val hero: Hero) {
                     }
                     return false;
                 }
+
+            } else {
+                target.HP -= 1;
+                println("${target.name} without attack card")
+                println("${target.name} get hurt hp -1");
+                println("${target.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+                if (target.HP == 0) {
+                    println("Asking other heros to save ${target.name} life by using peach card.");
+                    mainEventManager.notifyListener("AskSaveMe", target, cardByAttacker);
+                }
+                return false;
             }
         }
+    }
+
+
 
     fun blockBarbariansAssault(target: Hero, cardByAttacker: Card): Boolean {
 
@@ -272,7 +313,7 @@ class Listener(val hero: Hero) {
             if (hero.HP > 0) {
                 hero.HP -= 1;
             }
-            println("${ANSIColorConsole.red("${hero.name} without attack card, ${hero.name} can not dodged the  Hailof Arrows of hurt")}")
+            println("${ANSIColorConsole.red("${hero.name} without [dodge] card, ${hero.name} can not dodged the  Hailof Arrows of hurt")}")
             println("${hero.name} get hurt hp -1");
             println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
 
@@ -306,6 +347,4 @@ class Listener(val hero: Hero) {
         }
         return false
     }
-
-
 }
