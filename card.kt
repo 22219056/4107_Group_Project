@@ -91,6 +91,16 @@ class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 
 }
 
+class OathOfPeachGarden(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Oath Of Peach Garden";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
+
 class BarbariansAssault(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Barbarians Assault";
     override var color = color;
