@@ -17,24 +17,45 @@ class Game {
 
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
-//  dont del      val numbersIterator = heros.iterator().next()
-//  dont del      print(numbersIterator.name +" hello world ")
-        while (currentHero.cards.size > 0) {
+        var nextHero: Hero
 
-            if (currentHero.getJudgmentZone()) {
-                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
-                if (currentHero.abandonRound) {
-                    println("hero abandoned")
-                    discardPhase()
-                    break;
-                }
+        if(heros.indexOf(currentHero)+1 == heros.size){ //last man
+            nextHero = heros.get(0)
+        }else{
+            nextHero = heros.get(heros.indexOf(currentHero)+1)
+        }
+
+       if(currentHero.judgmentZone.isEmpty())  println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
+
+       for (Cards in currentHero.judgmentZone){
+           currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(),nextHero)
+       }
+//        currentHero.judgmentZone.forEach(
+//            if(currentHero.judgmentZone.peek() is lightningBolt)
+
+//            else if (currentHero.judgmentZone.peek() is AcediaCard){
+//                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
+//            }
+//        )
+
+
+
+
+
+        while (currentHero.cards.size > 0) {
+            if (currentHero.abandonRound) {
+                break;
             }
+            if (currentHero.getJudgmentZone() ) println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
 
             println("${name}'s turn:");
             currentHero.showCurrentHP();
 
             println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
-            currentHero.displayCards();
+
+
+
+            currentHero.displayCards()
             print("0.[End of turn]\n");
             print("Please select a card: ");
             var playerInput = readLine();
@@ -87,6 +108,13 @@ class Game {
                     cardPlaced.active(currentHero = currentHero);
                 }else if(cardPlaced is Plifer){
                     currentHero.PliferHandle(cardPlaced)
+                }else if (cardPlaced is lightningBolt) {
+                    if(currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
+                        println("You already have a lightningBolt\n")
+                        continue
+                    }else {
+                        currentHero.judgmentZone.push(cardPlaced)
+                    }
                 }
 
                 currentHero.removeCard(cardPlaced);

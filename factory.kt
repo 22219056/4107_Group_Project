@@ -56,10 +56,11 @@ class Deck {
             var cardList = listOf(
                     AttackCard(color, suit, rank),
                     DodgeCard(color, suit, rank),
+                    lightningBolt(color, suit, rank),
 //                    PeachCard(color, suit, rank),
 //                    ZhugeCrossbow(Color.Black, Suit.Spade, 1),
 //                    EightTrigrams(Color.Black, Suit.Spade, 2),
-//                    AcediaCard(Color.Red, Suit.Heart,6),
+                    AcediaCard(Color.Red, Suit.Heart,6)
 //                    BarbariansAssault(Color.Black,Suit.Club,7),
 //                    HailofArrows(Color.Red,Suit.Heart,1),
 //                    SleightofHand(Color.Red,Suit.Heart,7),
@@ -68,7 +69,7 @@ class Deck {
 //                OathOfPeachGarden(Color.Red, Suit.Heart, 1),
 //                Plifer(Color.Red, Suit.Spade, 4),
 //                        AzureDragonCrescentBlade(Color.Black,Suit.Spade,5),
-                    TwinSwords(Color.Black,Suit.Spade,2)
+//                    TwinSwords(Color.Black,Suit.Spade,2)
 
             )
 

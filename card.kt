@@ -55,10 +55,11 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
         if(judgement != null){
-            if (judgement.suit.equals("♥")) {
+            println("judenment card: "+this.name+"\njudgement card is" + judgement.getCardString())
+            if (judgement.suit.equals(Suit.Heart)) {
                 currentHero.abandonRound = false
             } else {
-                println("judgement card is" + judgement.getCardString())
+//                println("judgement card is" + judgement.getCardString())
                 currentHero.abandonRound = true
             }
         }
@@ -73,13 +74,21 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
         if(judgement != null){
-            println("judgement card is" + judgement.getCardString())
+            println("judenment card: "+this.name+"\njudgement card is" + judgement.getCardString())
 
-            if (judgement.suit.equals("♠") && judgement.rank <= 9 && judgement.rank >= 2) {
+            if (judgement.suit.equals(Suit.Spade) && (judgement.rank <= 9 && judgement.rank >= 2)) {
+                println("bingo")
                 currentHero.HP -= 3
             } else {
-                currentHero.commandMap["abandon"]?.execute();
+                if(targetHero?.getJudgmentZone()?.equals(this is lightningBolt) == true)  {
+                    println("Next hero already have a lightningBolt keep in your judgement zone\n")
+                }else{
+                    targetHero?.judgmentZone?.push(this)
+                }
             }
+
+//                currentHero.commandMap["abandon"]?.execute();
+
         }
     }
 }

@@ -34,6 +34,7 @@ abstract class Hero(role: Role) : Handler {
     open var armor: Card? = null
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag:Boolean = false
+    var judmentPass:Boolean = true
     var abandonRound: Boolean = false
 
     var canAttack: Boolean = true;
@@ -52,7 +53,10 @@ abstract class Hero(role: Role) : Handler {
     }
 
     open fun getJudgmentZone():Boolean{
-        if(!judgmentZone.isEmpty()) return true // need to have judgment
+        if(!judgmentZone.isEmpty()) {
+            return true // need to have judgment
+        }
+
         return this.judgmentFlag
     }
 
