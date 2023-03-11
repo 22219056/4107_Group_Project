@@ -21,21 +21,19 @@ class Game {
 
         var nextHero: Hero
 
-        if(heros.indexOf(currentHero)+1 == heros.size){ //last man
+        if (heros.indexOf(currentHero) + 1 == heros.size) { //last man
             nextHero = heros.get(0)
-        }else{
-            nextHero = heros.get(heros.indexOf(currentHero)+1)
+        } else {
+            nextHero = heros.get(heros.indexOf(currentHero) + 1)
         }
 
-        if(currentHero.judgmentZone.isEmpty())  println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
+        if (currentHero.judgmentZone.isEmpty()) println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
 
-        for (Cards in currentHero.judgmentZone){
-            currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(),nextHero)
+        for (Cards in currentHero.judgmentZone) {
+            currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(), nextHero)
         }
 
         while (currentHero.cards.size > 0) {
-
-
 
             println("${name}'s turn:");
             currentHero.showCurrentHP();
@@ -43,15 +41,20 @@ class Game {
             println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
             currentHero.displayCards();
             print("0.[End of turn]\n");
-            print("Please select a card: ");
-            var playerInput = readLine();
-            if (playerInput == "0") {
+            print("Please select a card: \n");
+            var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
+           
+            if (currentHero.canAttack == false) {
+                cardPlaced.rank = 0
+            }
+
+            if (cardPlaced.rank == 0) {
                 println()
                 discardPhase()
                 break;
             } else {
                 //player placed a card
-                var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
+//                var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
 
                 println("you use [${cardPlaced.getCardString()}]");
                 if (cardPlaced.name == "Attack") {
@@ -62,14 +65,14 @@ class Game {
                     //currentHero.attackEventHandle(cardPlaced);
                     if (currentHero.cards.size == 1 && currentHero.weapons is HeavenHalberd) {
                         var heroList = Random.nextInt(1, heros.size)
-                        while (heroList > 3 || heroList > heros.size - 1){
+                        while (heroList > 3 || heroList > heros.size - 1) {
                             heroList = Random.nextInt(1, heros.size)
                         }
 
-                            for (a in 1..heroList) {
-                                currentHero.attackEvent(cardPlaced);
-                            }
-                    }else{
+                        for (a in 1..heroList) {
+                            currentHero.attackEvent(cardPlaced);
+                        }
+                    } else {
                         currentHero.attackEvent(cardPlaced);
                     }
 
@@ -108,15 +111,18 @@ class Game {
                     currentHero.PliferHandle(cardPlaced)
                 } else if (cardPlaced is BurnBridges) {
                     currentHero.BurnBridgesHandle(cardPlaced)
-                } else if(cardPlaced is Mounts){
-                    currentHero.mounts=cardPlaced
-                }else if (cardPlaced is lightningBolt) {
-                    if(currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
+                } else if (cardPlaced is Mounts) {
+                    currentHero.mounts = cardPlaced
+                } else if (cardPlaced is lightningBolt) {
+                    if (currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
                         println("You already have a lightningBolt\n")
                         continue
-                    }else {
+                    } else {
                         currentHero.judgmentZone.push(cardPlaced)
                     }
+                } else if (cardPlaced is DodgeCard) {
+                    println("You can not use Dodge card")
+                    continue
                 }
 
                 currentHero.removeCard(cardPlaced);
@@ -128,7 +134,9 @@ class Game {
     fun discardPhase() {
         while (currentHero.cards.size > currentHero.HP) {
             println("You need to discard ${currentHero.cards.size - currentHero.HP}")
-            var selectedCard = currentHero.askHeroPlaceACard();
+//            var selectedCard = currentHero.askHeroPlaceACard();
+            var selectedCard = currentHero.cards[Random.nextInt(0, currentHero.cards.size)];
+            println()
             currentHero.cards.remove(selectedCard);
             println("You discard [${selectedCard.getCardString()}]");
 

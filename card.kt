@@ -13,7 +13,7 @@ enum class Color {
 interface Card {
     val name: String
     val suit: Suit
-    val rank: Int
+    var rank: Int
     val color: Color
     val used: Boolean
 
@@ -315,15 +315,5 @@ class EightTrigrams(color: Color, suit: Suit, rank: Int) : Armor() {
 }
 
 
-// abstract class TacticsCard:Card{
-// }
 
-// abstract class DelayTacticsCard:Card{}
-
-// abstract class EquipmentCard: Card{   
-// }
-
-// abstract class ArmorCard:Card{}
-
-// abstract class MountsCard:Card{}
 

@@ -14,6 +14,8 @@ import heros
 import mainEventManager
 import java.util.ArrayDeque
 
+import kotlin.random.Random
+
 enum class Gender {
     Male, Female;
 }
@@ -80,9 +82,13 @@ abstract class Hero(role: Role) : Handler {
         while (true) {
             println("Please place a card");
             this.displayCardFromList(cardList);
-            var index = readLine()?.toInt(); //card of index
-            if (index !== null && cards.size >= index && index!! > 0) {
-                return cards[index - 1];
+//            var index = readLine()?.toInt(); //card of index
+            var index = cardList[Random.nextInt(cardList.size)]; //card of index
+
+
+            if (index !== null && cards.size >= index.rank && index.rank!! > 0) {
+//                return cards[index - 1];
+                return cards[index.rank];
             }
             println("Not valid input, Please input again.");
             continue;

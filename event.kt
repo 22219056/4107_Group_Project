@@ -122,7 +122,7 @@ class Listener(val hero: Hero) {
 
                     return true
             } else {
-                println("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")
+                println("${ANSIColorConsole.red("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")}")
             }
 
         }
@@ -132,7 +132,7 @@ class Listener(val hero: Hero) {
                 hero.HP -= 1;
             }
 
-            ANSIColorConsole.printDanger("${hero.name} can't dodge this attack as ${hero.name} don't have a dodge card.");
+            ANSIColorConsole.printDanger("${ANSIColorConsole.red("${hero.name} can't dodge this attack as ${hero.name} don't have a dodge card.")}");
             println("${hero.name} get hurt hp -1");
             println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
 
