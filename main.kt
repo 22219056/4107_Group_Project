@@ -1,4 +1,5 @@
 import People.Hero
+import kotlin.random.Random
 
 class Game {
     lateinit var currentHero: Hero;
@@ -17,18 +18,24 @@ class Game {
 
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
-//  dont del      val numbersIterator = heros.iterator().next()
-//  dont del      print(numbersIterator.name +" hello world ")
+
+        var nextHero: Hero
+
+        if(heros.indexOf(currentHero)+1 == heros.size){ //last man
+            nextHero = heros.get(0)
+        }else{
+            nextHero = heros.get(heros.indexOf(currentHero)+1)
+        }
+
+        if(currentHero.judgmentZone.isEmpty())  println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
+
+        for (Cards in currentHero.judgmentZone){
+            currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(),nextHero)
+        }
+
         while (currentHero.cards.size > 0) {
 
-            if (currentHero.getJudgmentZone()) {
-                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
-                if (currentHero.abandonRound) {
-                    println("hero abandoned")
-                    discardPhase()
-                    break;
-                }
-            }
+
 
             println("${name}'s turn:");
             currentHero.showCurrentHP();
