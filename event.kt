@@ -1,4 +1,5 @@
 import People.Hero
+import kotlin.random.Random
 
 enum class EventType {
     Attack
@@ -47,9 +48,13 @@ class EventManager {
         for (listener in listeners) {
             if (listener.hero == specificHero) {
                 if (eventType == "Attack") {
-                    listener.beAttack(target, card);
+                    listener.beAttack(target, card)
                 } else if (eventType == "Duel") {
                     listener.toDuel(target, card)
+                }else if(eventType =="Plifer"){
+                    listener.toPlifer(target)
+                }else if(eventType=="BurnBridges"){
+                    listener.toBridges(target)
                 }
                 break;
             }
@@ -73,13 +78,49 @@ class Listener(val hero: Hero) {
         //active weapon effect
         if(target.weapons is TwinSwords){
             (target.weapons as TwinSwords).active(currentHero = target, targetHero = hero);
+        }else if(target.weapons is FrostBlade){
+            var choose = (0..1).random();
+            // 0 means active FrostBlade's effect
+            if(choose == 0) {
+                (target.weapons as FrostBlade).active(currentHero = target, targetHero = hero);
+                return true;
+            }
+
         }
 
         //player has not a dodge card
         if (hero.armor?.name != null) {
             if (Deck.getRadomCard().color.equals(Color.Red)) {
                 println("${hero.name} use  Eight Trigrams to judgment get red card, therefore, hero can dodge the attack\n")
-                return true
+
+                // use Rock Cleaving Axe effect
+                if(target.weapons is RockCleavingAxe) {
+
+                    var num = Random.nextInt(0,1)
+
+                    if(num==1){
+                        for (c in 1..2) {
+                            target.removeCard(target.cards[Random.nextInt(target.cards.size)])
+                        }
+                        println("${target.name} use Rock Cleaving Axe effect")
+
+                        if (hero.HP > 0) {
+                            hero.HP -= 1;
+                        }
+                        println("${hero.name} get hurt hp -1");
+                        println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+                        if (hero.HP == 0) {
+                            println("Asking other heros to save ${hero.name} life by using peach card.");
+                            mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
+                        }
+                        return false;
+                    }else{
+                        println("${target.name} not use Rock Cleaving Axe effect")
+                    }
+                }
+
+                    return true
             } else {
                 println("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")
             }
@@ -90,9 +131,11 @@ class Listener(val hero: Hero) {
             if (hero.HP > 0) {
                 hero.HP -= 1;
             }
+
             ANSIColorConsole.printDanger("${hero.name} can't dodge this attack as ${hero.name} don't have a dodge card.");
             println("${hero.name} get hurt hp -1");
             println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
             return false;
         }
 
@@ -105,6 +148,29 @@ class Listener(val hero: Hero) {
                 //compulsory use attack card when attacker equipped AzureDragonCrescentBlade weapon
                 if(target.weapons is AzureDragonCrescentBlade){
                     (target.weapons as AzureDragonCrescentBlade).active(currentHero = target, targetHero = hero);
+                }else if(target.weapons is RockCleavingAxe) {
+//                    var num = Random.nextInt(0,1)
+                    var num = 1
+                    if(num==1){
+                        for (c in 1..2) {
+                            target.removeCard(target.cards[Random.nextInt(target.cards.size)])
+                        }
+                        println("${target.name} use Rock Cleaving Axe effect")
+
+                        if (hero.HP > 0) {
+                            hero.HP -= 1;
+                        }
+                        println("${hero.name} get hurt hp -1");
+                        println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}");
+
+                        if (hero.HP == 0) {
+                            println("Asking other heros to save ${hero.name} life by using peach card.");
+                            mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
+                        }
+                        return false;
+                    }else{
+                        println("${target.name} not use Rock Cleaving Axe effect")
+                    }
                 }
 
                 return true;
@@ -139,7 +205,29 @@ class Listener(val hero: Hero) {
         }
     }
 
-    fun toPlifer(target: Hero, cardByAttacker: Card): Boolean {
+
+    fun toBridges(target: Hero): Boolean {
+
+
+        while (true) {
+            println("${hero.name}")
+            println("Please place a card to demolition target card");
+            hero.displayCardFromList(hero.cards)
+            var index = readLine()?.toInt();
+            if (index != 0 && hero.cards.size >= index!!) {
+
+
+
+                hero.removeCard(hero.cards[index - 1])
+
+                return true
+            }
+            println("Not valid input, Please input again.");
+            continue;
+        }
+//        return true
+    }
+    fun toPlifer(target: Hero): Boolean {
 
 
         while (true) {
@@ -232,6 +320,7 @@ class Listener(val hero: Hero) {
             }
         }
     }
+
 
 
 

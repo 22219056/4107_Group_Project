@@ -41,6 +41,12 @@ abstract class BasicCard : Card {
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
 }
 
+abstract class Mounts : Card {
+    override val used: Boolean = false;
+
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
+}
+
 abstract class TacticsCard : Card {
     override val used: Boolean = false;
 
@@ -93,12 +99,42 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class RedHare(color: Color, suit: Suit, rank: Int) : Mounts() {
+    override var name = "Red Hare";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+}
+class DaYuan(color: Color, suit: Suit, rank: Int) : Mounts() {
+    override var name = "Da Yuan";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+}
+class HuaLiu (color: Color, suit: Suit, rank: Int) : Mounts() {
+    override var name = "Hua Liu";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+}
+
+class BurnBridges(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Burn Bridges";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
 class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Plifer";
     override var color = color;
     override var suit = suit;
     override var rank = rank;
-
 
 }
 
@@ -191,6 +227,22 @@ class ZhugeCrossbow(color: Color, suit: Suit, rank: Int) : Weapons() {
     override var rank = rank;
 }
 
+
+class KirinBow(color: Color, suit: Suit, rank: Int) : Weapons() {
+    override var name = "Kirin Bow";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+}
+
+
+class HeavenHalberd(color: Color, suit: Suit, rank: Int) : Weapons() {
+    override var name = "Heaven Halberd";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+}
+
 class AzureDragonCrescentBlade(color: Color, suit: Suit, rank: Int):Weapons(){
     override var name = "Azure Dragon Crescent Blade";
     override var color = color;
@@ -230,6 +282,25 @@ class TwinSwords(color: Color, suit: Suit, rank: Int):Weapons(){
     }
 }
 
+class RockCleavingAxe(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Rock Cleaving Axe"
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+}
+
+class FrostBlade(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Frost Blade";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?){
+        //choose 2 cards in target hero’s hand or equipment zone and discard them.
+        println("Actived Frost Blade's effect, discard 2 cards in target hero's hand");
+        targetHero?.randomRemoveCard(2);
+    }
+}
 abstract class Armor : Card {
     override val used: Boolean = false;
 

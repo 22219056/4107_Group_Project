@@ -17,45 +17,24 @@ class Game {
 
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
-        var nextHero: Hero
-
-        if(heros.indexOf(currentHero)+1 == heros.size){ //last man
-            nextHero = heros.get(0)
-        }else{
-            nextHero = heros.get(heros.indexOf(currentHero)+1)
-        }
-
-       if(currentHero.judgmentZone.isEmpty())  println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
-
-       for (Cards in currentHero.judgmentZone){
-           currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(),nextHero)
-       }
-//        currentHero.judgmentZone.forEach(
-//            if(currentHero.judgmentZone.peek() is lightningBolt)
-
-//            else if (currentHero.judgmentZone.peek() is AcediaCard){
-//                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
-//            }
-//        )
-
-
-
-
-
+//  dont del      val numbersIterator = heros.iterator().next()
+//  dont del      print(numbersIterator.name +" hello world ")
         while (currentHero.cards.size > 0) {
-            if (currentHero.abandonRound) {
-                break;
+
+            if (currentHero.getJudgmentZone()) {
+                currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement())
+                if (currentHero.abandonRound) {
+                    println("hero abandoned")
+                    discardPhase()
+                    break;
+                }
             }
-            if (currentHero.getJudgmentZone() ) println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
 
             println("${name}'s turn:");
             currentHero.showCurrentHP();
 
             println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
-
-
-
-            currentHero.displayCards()
+            currentHero.displayCards();
             print("0.[End of turn]\n");
             print("Please select a card: ");
             var playerInput = readLine();
@@ -74,7 +53,19 @@ class Game {
                         continue
                     }
                     //currentHero.attackEventHandle(cardPlaced);
-                    currentHero.attackEvent(cardPlaced);
+                    if (currentHero.cards.size == 1 && currentHero.weapons is HeavenHalberd) {
+                        var heroList = Random.nextInt(1, heros.size)
+                        while (heroList > 3 || heroList > heros.size - 1){
+                            heroList = Random.nextInt(1, heros.size)
+                        }
+
+                            for (a in 1..heroList) {
+                                currentHero.attackEvent(cardPlaced);
+                            }
+                    }else{
+                        currentHero.attackEvent(cardPlaced);
+                    }
+
                     currentHero.canAttack = false;
 
                 } else if (cardPlaced.name == "Peach") {
@@ -102,12 +93,16 @@ class Game {
                     for (i in 1..2) {
                         currentHero.getCard(Deck.getRadomCard())
                     }
-                }else if(cardPlaced is Duel){
+                } else if (cardPlaced is Duel) {
                     currentHero.duelHandle(cardPlaced)
-                }else if(cardPlaced is OathOfPeachGarden){
+                } else if (cardPlaced is OathOfPeachGarden) {
                     cardPlaced.active(currentHero = currentHero);
-                }else if(cardPlaced is Plifer){
+                } else if (cardPlaced is Plifer) {
                     currentHero.PliferHandle(cardPlaced)
+                } else if (cardPlaced is BurnBridges) {
+                    currentHero.BurnBridgesHandle(cardPlaced)
+                } else if(cardPlaced is Mounts){
+                    currentHero.mounts=cardPlaced
                 }else if (cardPlaced is lightningBolt) {
                     if(currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
                         println("You already have a lightningBolt\n")
