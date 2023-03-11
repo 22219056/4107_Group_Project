@@ -37,7 +37,7 @@ abstract class Hero(role: Role) : Handler {
     open var mounts:Card?=null
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag:Boolean = false
-    var judmentPass:Boolean = true
+    open var alive : Boolean = true
     var abandonRound: Boolean = false
 
     var canAttack: Boolean = true;

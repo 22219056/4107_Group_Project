@@ -4,11 +4,11 @@ import People.Wu.*
 import People.Wei.*
 
 class HeroFactory {
-    var roles = listOf<Role>(Emperor(), Rebels(), Loyalist(), Traitor());
-    lateinit var listOfHero: List<Hero>;
+    var roles = mutableListOf<Role>(Emperor(), Rebels(), Loyalist(), Traitor());
+    lateinit var listOfHero: MutableList<Hero>;
 
     fun initHeros() {
-        listOfHero = listOf<Hero>(
+        listOfHero = mutableListOf<Hero>(
                 ZhouYU(Emperor()),
                 GuanYu(Rebels())
         );
@@ -54,8 +54,8 @@ class Deck {
             var rank = getRandomRank();
 
             var cardList = listOf(
-                    AttackCard(color, suit, rank),
-                    DodgeCard(color, suit, rank),
+                    AttackCard(Color.Black, Suit.Spade,3),
+//                    DodgeCard(Color.Black, Suit.Spade,3),
 //                    PeachCard(color, suit, rank),
 //                    ZhugeCrossbow(Color.Black, Suit.Spade, 1),
 //                    EightTrigrams(Color.Black, Suit.Spade, 2),
@@ -64,18 +64,18 @@ class Deck {
 //                    HailofArrows(Color.Red,Suit.Heart,1),
 //                    SleightofHand(Color.Red,Suit.Heart,7),
 //                    Duel(Color.Black,Suit.Spade,1),
-//                    lightningBolt(Color.Black, Suit.Spade,1)
+                    lightningBolt(Color.Black, Suit.Spade,3),
 //                    OathOfPeachGarden(Color.Red, Suit.Heart, 1),
 ////                Plifer(Color.Red, Suit.Spade, 4),
 //                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
 //                    TwinSwords(Color.Black, Suit.Spade, 2),
 //                    RockCleavingAxe(Color.Red, Suit.Diamond, 5),
-                    HeavenHalberd(Color.Red, Suit.Diamond, 12),
-                    KirinBow(Color.Red, Suit.Heart, 5),
-                    RedHare(Color.Red, Suit.Heart, 5),
-                    DaYuan(Color.Black, Suit.Club, 13),
-                    HuaLiu(Color.Red, Suit.Diamond, 13),
-                    FrostBlade(Color.Black, Suit.Spade, 2)
+//                    HeavenHalberd(Color.Red, Suit.Diamond, 12),
+//                    KirinBow(Color.Red, Suit.Heart, 5),
+//                    RedHare(Color.Red, Suit.Heart, 5),
+//                    DaYuan(Color.Black, Suit.Club, 13),
+//                    HuaLiu(Color.Red, Suit.Diamond, 13),
+                    FrostBlade(Color.Black, Suit.Spade, 3)
             )
 
             return cardList.random();

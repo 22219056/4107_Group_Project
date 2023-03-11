@@ -1,23 +1,17 @@
 import People.Hero
 import kotlin.random.Random
+import kotlin.system.exitProcess
 
 class Game {
     lateinit var currentHero: Hero;
-    lateinit var heros: List<Hero>;
+    lateinit var heros: MutableList<Hero>;
 
     fun startPhase() {
+        if(heros.size==1){
+            println("win")
+            exitProcess(0)
+        }
         println("start phase");
-    }
-
-    fun judgmentPhase() {}
-
-
-    fun mainPhase(name: String) {
-
-//        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
-
-        currentHero.canAttack = true;
-        currentHero.drawPhase(currentHero)
 
         var nextHero: Hero
 
@@ -31,10 +25,30 @@ class Game {
 
         for (Cards in currentHero.judgmentZone) {
             currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(), nextHero)
+            if(currentHero.HP<=0){
+                break
+            }
         }
+    }
+
+    fun judgmentPhase() {}
+
+
+    fun mainPhase(name: String) {
+
+//        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
+
+
+
+
+        currentHero.canAttack = true;
+        currentHero.drawPhase(currentHero)
+
+
 
         while (currentHero.cards.size > 0) {
 
+            if (!currentHero.judgmentZone.isEmpty()) println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
             println("${name}'s turn:");
             currentHero.showCurrentHP();
 
@@ -157,11 +171,15 @@ class Game {
     fun start() {
         while (true) {
             for (hero in heros) {
+
                 currentHero = hero;
                 startPhase();
-                mainPhase("${hero.name}");
-                endPhase();
-                println();
+                if(hero.HP>0){
+                    mainPhase("${hero.name}");
+                    endPhase();
+                    println();
+                }
+
 
             }
         }
@@ -173,7 +191,7 @@ class Game {
 
 //--global variables
 var mainEventManager = EventManager();
-var heros: List<Hero> = listOf();
+var heros: MutableList<Hero> = mutableListOf();
 
 //--------
 
@@ -185,7 +203,7 @@ fun main() {
     cardFactory.dealingCard();
 
     var game = Game();
-    game.heros = heros;
+    game.heros = heros as MutableList<Hero>;
 
     game.start();
 

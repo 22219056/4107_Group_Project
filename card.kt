@@ -85,6 +85,11 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
             if (judgement.suit.equals(Suit.Spade) && (judgement.rank <= 9 && judgement.rank >= 2)) {
                 println("bingo")
                 currentHero.HP -= 3
+                if(currentHero.HP<=0){
+                    currentHero.alive = false
+                    heros.remove(currentHero)
+                }
+
             } else {
                 if(targetHero?.getJudgmentZone()?.equals(this is lightningBolt) == true)  {
                     println("Next hero already have a lightningBolt keep in your judgement zone\n")
@@ -96,6 +101,7 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 //                currentHero.commandMap["abandon"]?.execute();
 
         }
+
     }
 }
 
