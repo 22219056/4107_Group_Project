@@ -32,19 +32,19 @@ interface Card {
         return "$color $suitString $rank $name";
     }
 
-    fun active(currentHero: Hero, judgement: Card)
+    fun active(currentHero: Hero, judgement: Card? = null, targetHero: Hero? = null)
 }
 
 abstract class BasicCard : Card {
     override val used: Boolean = false;
 
-    override fun active(currentHero: Hero, judgement: Card) {};
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
 }
 
 abstract class TacticsCard : Card {
     override val used: Boolean = false;
 
-    override fun active(currentHero: Hero, judgement: Card) {};
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
 }
 
 class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
@@ -53,14 +53,15 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var suit = suit;
     override var rank = rank;
 
-    override fun active(targetHero: Hero, judgement: Card) {
-        if (judgement.suit.equals("♥")) {
-            targetHero.abandonRound = false
-        } else {
-            println("judgement card is" + judgement.getCardString())
-            targetHero.abandonRound = true
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        if(judgement != null){
+            if (judgement.suit.equals("♥")) {
+                currentHero.abandonRound = false
+            } else {
+                println("judgement card is" + judgement.getCardString())
+                currentHero.abandonRound = true
+            }
         }
-
     }
 }
 
@@ -70,15 +71,16 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var suit = suit;
     override var rank = rank;
 
-    override fun active(targetHero: Hero, judgement: Card) {
-        println("judgement card is" + judgement.getCardString())
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        if(judgement != null){
+            println("judgement card is" + judgement.getCardString())
 
-        if (judgement.suit.equals("♠") && judgement.rank <= 9 && judgement.rank >= 2) {
-            targetHero.HP -= 3
-        } else {
-            targetHero.abandonRound = true
+            if (judgement.suit.equals("♠") && judgement.rank <= 9 && judgement.rank >= 2) {
+                currentHero.HP -= 3
+            } else {
+                currentHero.commandMap["abandon"]?.execute();
+            }
         }
-
     }
 }
 
@@ -97,7 +99,9 @@ class OathOfPeachGarden(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var suit = suit;
     override var rank = rank;
 
-
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        mainEventManager.notifyAllHero("oathOfPeachGarden",this);
+    }
 }
 
 
@@ -142,9 +146,9 @@ class AttackCard(color: Color, suit: Suit, rank: Int) : BasicCard() {
     override var suit = suit;
     override var rank = rank;
 
-    override fun active(targetHero: Hero, judgement: Card) {
-        if (targetHero.HP > 0) {
-            targetHero.HP -= 1;
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        if (currentHero.HP > 0) {
+            currentHero.HP -= 1;
         }
     }
 }
@@ -167,7 +171,7 @@ class PeachCard(color: Color, suit: Suit, rank: Int) : BasicCard() {
 abstract class Weapons : Card {
     override val used: Boolean = false;
 
-    override fun active(currentHero: Hero, judgement: Card) {};
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
 }
 
 
@@ -179,16 +183,48 @@ class ZhugeCrossbow(color: Color, suit: Suit, rank: Int) : Weapons() {
 }
 
 class AzureDragonCrescentBlade(color: Color, suit: Suit, rank: Int):Weapons(){
-    override var name = "Azure Dragon Crescent Blade"
+    override var name = "Azure Dragon Crescent Blade";
     override var color = color;
     override var suit = suit;
     override var rank = rank;
+
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        if(currentHero.hasAttackTypeCard() && targetHero != null){
+            println("Active effect of Azure Dragon Crescent Blade weapon, can attack again");
+            mainEventManager.notifySpecificListener("Attack",currentHero,targetHero,this);
+        }
+    }
+}
+
+class TwinSwords(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Twin Swords";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
+        if(targetHero != null){
+            if(currentHero.gender != targetHero.gender){
+                println("Active Twin Swords Weapon effect")
+                var choice = (0..1).random();
+                if(choice == 0){
+                    //discard a card
+                    println("${targetHero.name} choose discard a card");
+                    targetHero.randomRemoveCard(1);
+                }else{
+                    // let current hero draw a card
+                    println("${currentHero.name} draw a card");
+                    currentHero.getCard(Deck.getRadomCard());
+                }
+            }
+        }
+    }
 }
 
 abstract class Armor : Card {
     override val used: Boolean = false;
 
-    override fun active(currentHero: Hero, judgement: Card) {};
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {};
 }
 
 class EightTrigrams(color: Color, suit: Suit, rank: Int) : Armor() {

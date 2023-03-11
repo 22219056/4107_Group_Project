@@ -43,7 +43,6 @@ class EventManager {
         }
     }
 
-
     fun notifySpecificListener(eventType: String, target: Hero, specificHero: Hero, card: Card) {
         for (listener in listeners) {
             if (listener.hero == specificHero) {
@@ -69,6 +68,12 @@ class Listener(val hero: Hero) {
         //Check whether the player has a dodge card.
 
         println("${hero.name} is under attack now");
+
+
+        //active weapon effect
+        if(target.weapons is TwinSwords){
+            (target.weapons as TwinSwords).active(currentHero = target, targetHero = hero);
+        }
 
         //player has not a dodge card
         if (hero.armor?.name != null) {
@@ -98,12 +103,9 @@ class Listener(val hero: Hero) {
                 println("${hero.name} dodged the attack");
 
                 //compulsory use attack card when attacker equipped AzureDragonCrescentBlade weapon
-                if(target.weapons is AzureDragonCrescentBlade && target.hasAttackTypeCard()){
-                    println("Active effect of Azure Dragon Crescent Blade weapon, can attack again");
-                    mainEventManager.notifySpecificListener("Attack",target,hero,cardByAttacker);
+                if(target.weapons is AzureDragonCrescentBlade){
+                    (target.weapons as AzureDragonCrescentBlade).active(currentHero = target, targetHero = hero);
                 }
-
-
 
                 return true;
             } else {

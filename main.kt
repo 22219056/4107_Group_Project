@@ -13,8 +13,8 @@ class Game {
 
     fun mainPhase(name: String) {
 
-
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
+
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
 //  dont del      val numbersIterator = heros.iterator().next()
@@ -52,7 +52,8 @@ class Game {
                         println("You can not attack again\n")
                         continue
                     }
-                    currentHero.attackEventHandle(cardPlaced);
+                    //currentHero.attackEventHandle(cardPlaced);
+                    currentHero.attackEvent(cardPlaced);
                     currentHero.canAttack = false;
 
                 } else if (cardPlaced.name == "Peach") {
@@ -83,8 +84,7 @@ class Game {
                 }else if(cardPlaced is Duel){
                     currentHero.duelHandle(cardPlaced)
                 }else if(cardPlaced is OathOfPeachGarden){
-//                    currentHero.oathOfPeachGardenHandle(cardPlaced)
-                   mainEventManager.notifyAllHero("oathOfPeachGarden",cardPlaced)
+                    cardPlaced.active(currentHero = currentHero);
                 }else if(cardPlaced is Plifer){
                     currentHero.PliferHandle(cardPlaced)
                 }
@@ -145,7 +145,6 @@ fun main() {
     heros = heroFactory.listOfHero;
     var cardFactory = CardFactory(heros);
     cardFactory.dealingCard();
-
 
     var game = Game();
     game.heros = heros;

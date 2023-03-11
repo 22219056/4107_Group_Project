@@ -1,6 +1,8 @@
 package People
 
 import ANSIColorConsole
+import Abandon
+import Attack
 import AttackCard
 import Card
 import Deck
@@ -35,6 +37,16 @@ abstract class Hero(role: Role) : Handler {
     var abandonRound: Boolean = false
 
     var canAttack: Boolean = true;
+
+    //status
+    var abandon: Boolean = false;
+
+    //command map
+    var commandMap = mutableMapOf(
+        "abandon" to Abandon(this),
+        "attack" to Attack(this)
+    )
+
     open fun setJudgmentZone(card:Card){
         judgmentZone.push(card)
     }
@@ -209,6 +221,17 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+    open fun attackEvent(placedCard: Card){
+        commandMap["attack"]?.execute(cardPlaced = placedCard);
+    }
+    open fun randomRemoveCard(numOfCard: Int){
+        for(i in 0..numOfCard){
+            if(cards.size > 0){
+                removeCard(cards.random());
+            }
+        }
+    }
+
     open fun duelHandle(placedCard: Card) {
         println("Please select a hero you want to duel");
 
@@ -259,7 +282,6 @@ abstract class Hero(role: Role) : Handler {
 
     }
 
-
     open fun acediaEventHandle(placedCard: Card) {
         println("Please select a hero you want to place the Acedia");
 
@@ -276,78 +298,6 @@ abstract class Hero(role: Role) : Handler {
         var index = readlnOrNull()?.toInt();
         if (index != null) {
            availableHeroes[index].setJudgmentZone(placedCard)
-        }
-    }
-
-
-
-
-//    open fun attackEvent(placedCard: Card, heros: List<Hero>, currentHero: String) {
-//        println("Select you want to attack role")
-//
-//        showRoleList(heros, currentHero)
-//        var commandInput = readLine();
-//
-//        for ((index, hero) in heros.withIndex()) {
-//            if (commandInput.equals("${(index + 1).toString()}")) {
-//                println("You select attack ${hero.name}\n")
-//
-////                println("${hero.name} need to make a decision, please select a card:")
-//                dodgeEvent(heros, hero.name)
-////                hero.displayCards()
-////                commandInput = readLine();
-//            }
-//        }
-//
-////        mainEventManager.notifyListener("Attack", this, placedCard);
-//    }
-
-
-    open fun dodgeEvent(heros: List<Hero>, beAttackedHero: String) {
-
-        for ((index, hero) in heros.withIndex()) {
-
-            if (hero.name.equals("${beAttackedHero}") && hero.cards.size > 0) {
-
-                for ((index, card) in hero.cards.withIndex()) {
-
-//                    if (card.name.equals("Dodge")) {
-                    println("${hero.name}")
-                    hero.displayCards()
-                    print("0.[give up dodge]\n");
-
-                    while (true) {
-                        var commandInput = readLine();
-                        if (commandInput == "0") {
-                            println("${hero.name} get hurt hp -1")
-                            hero.HP -= 1
-                            println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}")
-                            break
-                        } else {
-                            if (hero.cards[commandInput!!.toInt() - 1].name.equals("Dodge")) {
-                                println(hero.cards[commandInput!!.toInt() - 1].name)
-                                var cardPlaced = hero.cards[commandInput!!.toInt() - 1];
-                                hero.removeCard(cardPlaced);
-                                println("${hero.name} use dodge card to dodge attack")
-                                break
-                            } else {
-                                println("You can not use this card ,please input command again")
-                                continue
-                            }
-
-                        }
-                    }
-//                    }
-
-                }
-
-
-            } else if (hero.name.equals("${beAttackedHero}")) {
-                println("${hero.name} no card dodge that get hurt hp -1")
-                hero.HP -= 1
-                println("${hero.name} ${ANSIColorConsole.red("♥")} HP = ${hero.HP}")
-                break
-            }
         }
     }
 
