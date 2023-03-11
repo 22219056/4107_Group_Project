@@ -64,7 +64,10 @@ class Game {
                             for (a in 1..heroList) {
                                 currentHero.attackEvent(cardPlaced);
                             }
+                    }else{
+                        currentHero.attackEvent(cardPlaced);
                     }
+
                     currentHero.canAttack = false;
 
                 } else if (cardPlaced.name == "Peach") {

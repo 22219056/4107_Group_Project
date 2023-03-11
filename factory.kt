@@ -70,8 +70,8 @@ class Deck {
 //                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
 //                    TwinSwords(Color.Black, Suit.Spade, 2),
 //                    RockCleavingAxe(Color.Red, Suit.Diamond, 5),
-                    HeavenHalberd(Color.Red,Suit.Diamond,12)
-
+                    HeavenHalberd(Color.Red,Suit.Diamond,12),
+                FrostBlade(Color.Black, Suit.Spade, 2)
             )
 
             return cardList.random();

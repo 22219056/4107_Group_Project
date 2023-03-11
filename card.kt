@@ -251,7 +251,9 @@ class FrostBlade(color: Color, suit: Suit, rank: Int):Weapons(){
     override var rank = rank;
 
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?){
-
+        //choose 2 cards in target hero’s hand or equipment zone and discard them.
+        println("Actived Frost Blade's effect, discard 2 cards in target hero's hand");
+        targetHero?.randomRemoveCard(2);
     }
 }
 abstract class Armor : Card {

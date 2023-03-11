@@ -78,6 +78,14 @@ class Listener(val hero: Hero) {
         //active weapon effect
         if(target.weapons is TwinSwords){
             (target.weapons as TwinSwords).active(currentHero = target, targetHero = hero);
+        }else if(target.weapons is FrostBlade){
+            var choose = (0..1).random();
+            // 0 means active FrostBlade's effect
+            if(choose == 0) {
+                (target.weapons as FrostBlade).active(currentHero = target, targetHero = hero);
+                return true;
+            }
+
         }
 
         //player has not a dodge card
