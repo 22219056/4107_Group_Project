@@ -43,12 +43,30 @@ class Game {
             print("0.[End of turn]\n");
             print("Please select a card: \n");
             var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
-           
+
+            // check card list only Dodge
+            var onlyDodge = "Yes"
+
+            while (cardPlaced is DodgeCard) {
+                cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
+
+
+
+                for (c in currentHero.cards) {
+                    if (c !is DodgeCard){
+                        onlyDodge="no"
+                    }
+
+                }
+
+            }
+
+
             if (currentHero.canAttack == false) {
                 cardPlaced.rank = 0
             }
 
-            if (cardPlaced.rank == 0) {
+            if (cardPlaced.rank == 0 || onlyDodge == "Yes") {
                 println()
                 discardPhase()
                 break;
@@ -120,9 +138,6 @@ class Game {
                     } else {
                         currentHero.judgmentZone.push(cardPlaced)
                     }
-                } else if (cardPlaced is DodgeCard) {
-                    println("You can not use Dodge card")
-                    continue
                 }
 
                 currentHero.removeCard(cardPlaced);
@@ -152,6 +167,7 @@ class Game {
     fun endPhase() {
         //diao chan can draw one card
         println("end of ${currentHero.name}'s turn");
+        println()
     }
 
     fun start() {
@@ -183,6 +199,12 @@ fun main() {
     heros = heroFactory.listOfHero;
     var cardFactory = CardFactory(heros);
     cardFactory.dealingCard();
+
+    for (h in heros) {
+        if (h.HP <= 0) {
+            println("${h.name} died")
+        }
+    }
 
     var game = Game();
     game.heros = heros;
