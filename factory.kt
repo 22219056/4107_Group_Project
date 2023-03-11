@@ -71,7 +71,11 @@ class Deck {
 //                    TwinSwords(Color.Black, Suit.Spade, 2),
 //                    RockCleavingAxe(Color.Red, Suit.Diamond, 5),
                     HeavenHalberd(Color.Red,Suit.Diamond,12),
-                FrostBlade(Color.Black, Suit.Spade, 2)
+                            KirinBow(Color.Red,Suit.Heart,5),
+            RedHare(Color.Red,Suit.Heart,5),
+            DaYuan(Color.Black,Suit.Club,13),
+            HuaLiu(Color.Red,Suit.Diamond,13),
+                    FrostBlade(Color.Black, Suit.Spade, 2)
             )
 
             return cardList.random();

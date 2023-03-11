@@ -7,6 +7,7 @@ import AttackCard
 import Card
 import Deck
 import DodgeCard
+import Mounts
 import PeachCard
 import Role
 import heros
@@ -31,6 +32,7 @@ abstract class Hero(role: Role) : Handler {
     var role: Role = role;
     open var weapons: Card? = null
     open var armor: Card? = null
+    open var mounts:Card?=null
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag:Boolean = false
     var abandonRound: Boolean = false

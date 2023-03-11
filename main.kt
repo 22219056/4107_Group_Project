@@ -34,7 +34,7 @@ class Game {
             println("${name}'s turn:");
             currentHero.showCurrentHP();
 
-            println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
+            println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name} | Mounts: ${currentHero.mounts?.name}")
             currentHero.displayCards();
             print("0.[End of turn]\n");
             print("Please select a card: ");
@@ -103,8 +103,8 @@ class Game {
                     currentHero.PliferHandle(cardPlaced)
                 } else if (cardPlaced is BurnBridges) {
                     currentHero.BurnBridgesHandle(cardPlaced)
-                } else if (cardPlaced is HeavenHalberd) {
-                    currentHero.weapons = cardPlaced
+                } else if(cardPlaced is Mounts){
+                    currentHero.mounts=cardPlaced
                 }
 
                 currentHero.removeCard(cardPlaced);
