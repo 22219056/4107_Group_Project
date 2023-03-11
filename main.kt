@@ -14,6 +14,8 @@ class Game {
 
     fun mainPhase(name: String) {
 
+
+
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
 
         currentHero.canAttack = true;
@@ -44,29 +46,12 @@ class Game {
             print("Please select a card: \n");
             var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
 
-            // check card list only Dodge
-            var onlyDodge = "Yes"
-
-            while (cardPlaced is DodgeCard) {
-                cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
 
 
 
-                for (c in currentHero.cards) {
-                    if (c !is DodgeCard){
-                        onlyDodge="no"
-                    }
 
-                }
+            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero)==0) {
 
-            }
-
-
-            if (currentHero.canAttack == false) {
-                cardPlaced.rank = 0
-            }
-
-            if (cardPlaced.rank == 0 || onlyDodge == "Yes") {
                 println()
                 discardPhase()
                 break;
@@ -200,11 +185,7 @@ fun main() {
     var cardFactory = CardFactory(heros);
     cardFactory.dealingCard();
 
-    for (h in heros) {
-        if (h.HP <= 0) {
-            println("${h.name} died")
-        }
-    }
+
 
     var game = Game();
     game.heros = heros;
