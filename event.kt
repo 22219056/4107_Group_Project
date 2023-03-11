@@ -48,7 +48,7 @@ class EventManager {
         for (listener in listeners) {
             if (listener.hero == specificHero) {
                 if (eventType == "Attack") {
-                    listener.beAttack(target, card);
+                    listener.beAttack(target, card)
                 } else if (eventType == "Duel") {
                     listener.toDuel(target, card)
                 }else if(eventType =="Plifer"){
@@ -140,7 +140,6 @@ class Listener(val hero: Hero) {
                 if(target.weapons is AzureDragonCrescentBlade){
                     (target.weapons as AzureDragonCrescentBlade).active(currentHero = target, targetHero = hero);
                 }
-
                 // use Rock Cleaving Axe effect
                 if(target.weapons is RockCleavingAxe) {
                     var num = Random.nextInt(0,1)

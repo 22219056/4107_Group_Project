@@ -66,10 +66,10 @@ class Deck {
 //                    Duel(Color.Black,Suit.Spade,1),
 //                    lightningBolt(Color.Black, Suit.Spade,1)
 //                    OathOfPeachGarden(Color.Red, Suit.Heart, 1),
-////                Plifer(Color.Red, Suit.Spade, 4),
-//                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
-//                    TwinSwords(Color.Black, Suit.Spade, 2),
-                    RockCleavingAxe(Color.Red, Suit.Diamond, 5)
+//                Plifer(Color.Red, Suit.Spade, 4),
+                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
+//                   TwinSwords(Color.Black, Suit.Spade, 2),
+//                    RockCleavingAxe(Color.Red, Suit.Diamond, 5)
             )
 
             return cardList.random();

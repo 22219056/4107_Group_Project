@@ -237,6 +237,16 @@ class RockCleavingAxe(color: Color, suit: Suit, rank: Int):Weapons(){
     override var rank = rank;
 }
 
+class FrostBlade(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Frost Blade";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+    override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?){
+
+    }
+}
 abstract class Armor : Card {
     override val used: Boolean = false;
 

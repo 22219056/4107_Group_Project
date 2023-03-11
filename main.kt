@@ -47,6 +47,7 @@ class Game {
                 var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
 
                 println("you use [${cardPlaced.getCardString()}]");
+
                 if (cardPlaced.name == "Attack") {
                     if (!currentHero.canAttack && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
                         println("You can not attack again\n")

@@ -12,7 +12,6 @@ import Role
 import heros
 import mainEventManager
 import java.util.ArrayDeque
-import javax.swing.text.StyledEditorKit.BoldAction
 
 enum class Gender {
     Male, Female;
@@ -244,7 +243,9 @@ abstract class Hero(role: Role) : Handler {
 
     open fun attackEvent(placedCard: Card){
         commandMap["attack"]?.execute(cardPlaced = placedCard);
+
     }
+
     open fun randomRemoveCard(numOfCard: Int){
         for(i in 0..numOfCard){
             if(cards.size > 0){
