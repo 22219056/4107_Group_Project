@@ -34,9 +34,9 @@ abstract class Hero(role: Role) : Handler {
     var role: Role = role;
     open var weapons: Card? = null
     open var armor: Card? = null
-    open var mounts:Card?=null
+    open var mounts: Card? = null
     var judgmentZone = ArrayDeque<Card>()
-    var judgmentFlag:Boolean = false
+    var judgmentFlag: Boolean = false
     open var alive : Boolean = true
     var abandonRound: Boolean = false
 
@@ -47,16 +47,33 @@ abstract class Hero(role: Role) : Handler {
 
     //command map
     var commandMap = mutableMapOf(
-        "abandon" to Abandon(this),
-        "attack" to Attack(this)
+            "abandon" to Abandon(this),
+            "attack" to Attack(this)
     )
 
-    open fun setJudgmentZone(card:Card){
+
+    open fun checkOnlyDodge_Attack_Peach(currentHero: Hero): Int {
+        var onlyCard = 0
+        for (c in currentHero.cards) {
+            if (c !is DodgeCard || c !is AttackCard) {
+                onlyCard += 1
+//                var asd = readLine()
+            } else {
+                if (currentHero.HP < currentHero.maxHP && c is PeachCard) {
+                    onlyCard += 1
+//                    var asd = readLine()
+                }
+            }
+        }
+        return onlyCard
+    }
+
+    open fun setJudgmentZone(card: Card) {
         judgmentZone.push(card)
     }
 
-    open fun getJudgmentZone():Boolean{
-        if(!judgmentZone.isEmpty()) {
+    open fun getJudgmentZone(): Boolean {
+        if (!judgmentZone.isEmpty()) {
             return true // need to have judgment
         }
 
@@ -67,9 +84,11 @@ abstract class Hero(role: Role) : Handler {
         hero.getCard(Deck.getRadomCard())
         hero.getCard(Deck.getRadomCard())
     }
-    open fun getJudgement():Card{
-        return  Deck.getRadomCard()
+
+    open fun getJudgement(): Card {
+        return Deck.getRadomCard()
     }
+
     //Compulsory
     open fun askHeroPlaceACard(filterList: List<String>? = null): Card {
         var cardList = mutableListOf<Card>();
@@ -120,6 +139,7 @@ abstract class Hero(role: Role) : Handler {
         }
         return null;
     }
+
 
     open fun hasDodgeTypeCard(): Boolean {
         for (card in cards) {
@@ -195,8 +215,7 @@ abstract class Hero(role: Role) : Handler {
     }
 
 
-
-    open fun BurnBridgesHandle(placedCard: Card){
+    open fun BurnBridgesHandle(placedCard: Card) {
         println("Please select a hero you want to demolition her/his card");
 
         //show list of hero
@@ -217,7 +236,7 @@ abstract class Hero(role: Role) : Handler {
     }
 
 
-    open fun PliferHandle(placedCard: Card){
+    open fun PliferHandle(placedCard: Card) {
         println("Please select a hero you want to take her/his card");
 
         //show list of hero
@@ -256,14 +275,14 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
-    open fun attackEvent(placedCard: Card){
+    open fun attackEvent(placedCard: Card) {
         commandMap["attack"]?.execute(cardPlaced = placedCard);
 
     }
 
-    open fun randomRemoveCard(numOfCard: Int){
-        for(i in 0..numOfCard){
-            if(cards.size > 0){
+    open fun randomRemoveCard(numOfCard: Int) {
+        for (i in 0..numOfCard) {
+            if (cards.size > 0) {
                 removeCard(cards.random());
             }
         }
@@ -288,7 +307,7 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
-    open fun barbariansAssaultHandle(placedCard: Card){
+    open fun barbariansAssaultHandle(placedCard: Card) {
         println("${this.name} use ${placedCard.name}, all hero need to use [Attack] card to dodge the hurt\n")
 
         var availableHeroes = listOf<Hero>();
@@ -299,12 +318,12 @@ abstract class Hero(role: Role) : Handler {
 
             }
         }
-        mainEventManager.notifyListener("barbariansAssault", this,placedCard);
+        mainEventManager.notifyListener("barbariansAssault", this, placedCard);
 
 
     }
 
-    open fun HailofArrowsHandle(placedCard: Card){
+    open fun HailofArrowsHandle(placedCard: Card) {
         println("${this.name} use ${placedCard.name}, all hero need to use [Dodge] card to dodge the hurt\n")
 
         var availableHeroes = listOf<Hero>();
@@ -314,7 +333,7 @@ abstract class Hero(role: Role) : Handler {
 
             }
         }
-        mainEventManager.notifyListener("hailofArrowsAssault", this,placedCard);
+        mainEventManager.notifyListener("hailofArrowsAssault", this, placedCard);
 
 
     }
@@ -334,7 +353,7 @@ abstract class Hero(role: Role) : Handler {
         //selected by attacker
         var index = readlnOrNull()?.toInt();
         if (index != null) {
-           availableHeroes[index].setJudgmentZone(placedCard)
+            availableHeroes[index].setJudgmentZone(placedCard)
         }
     }
 

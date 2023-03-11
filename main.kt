@@ -36,10 +36,9 @@ class Game {
 
     fun mainPhase(name: String) {
 
+
+
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
-
-
-
 
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
@@ -57,12 +56,13 @@ class Game {
             print("0.[End of turn]\n");
             print("Please select a card: \n");
             var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
-           
-            if (currentHero.canAttack == false) {
-                cardPlaced.rank = 0
-            }
 
-            if (cardPlaced.rank == 0) {
+
+
+
+
+            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero)==0) {
+
                 println()
                 discardPhase()
                 break;

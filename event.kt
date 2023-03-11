@@ -51,9 +51,9 @@ class EventManager {
                     listener.beAttack(target, card)
                 } else if (eventType == "Duel") {
                     listener.toDuel(target, card)
-                }else if(eventType =="Plifer"){
+                } else if (eventType == "Plifer") {
                     listener.toPlifer(target)
-                }else if(eventType=="BurnBridges"){
+                } else if (eventType == "BurnBridges") {
                     listener.toBridges(target)
                 }
                 break;
@@ -71,17 +71,17 @@ class Listener(val hero: Hero) {
     fun beAttack(target: Hero, cardByAttacker: Card): Boolean {
         //var state: Boolean = false;
         //Check whether the player has a dodge card.
-
+        println()
         println("${hero.name} is under attack now");
 
 
         //active weapon effect
-        if(target.weapons is TwinSwords){
+        if (target.weapons is TwinSwords) {
             (target.weapons as TwinSwords).active(currentHero = target, targetHero = hero);
-        }else if(target.weapons is FrostBlade){
+        } else if (target.weapons is FrostBlade) {
             var choose = (0..1).random();
             // 0 means active FrostBlade's effect
-            if(choose == 0) {
+            if (choose == 0) {
                 (target.weapons as FrostBlade).active(currentHero = target, targetHero = hero);
                 return true;
             }
@@ -94,11 +94,11 @@ class Listener(val hero: Hero) {
                 println("${hero.name} use  Eight Trigrams to judgment get red card, therefore, hero can dodge the attack\n")
 
                 // use Rock Cleaving Axe effect
-                if(target.weapons is RockCleavingAxe) {
+                if (target.weapons is RockCleavingAxe) {
 
-                    var num = Random.nextInt(0,1)
+                    var num = Random.nextInt(0, 1)
 
-                    if(num==1){
+                    if (num == 1) {
                         for (c in 1..2) {
                             target.removeCard(target.cards[Random.nextInt(target.cards.size)])
                         }
@@ -115,12 +115,12 @@ class Listener(val hero: Hero) {
                             mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
                         }
                         return false;
-                    }else{
+                    } else {
                         println("${target.name} not use Rock Cleaving Axe effect")
                     }
                 }
 
-                    return true
+                return true
             } else {
                 println("${ANSIColorConsole.red("${hero.name} use  Eight Trigrams to judgment get black card, therefore, hero can not use it to dodge the attack")}")
             }
@@ -146,12 +146,12 @@ class Listener(val hero: Hero) {
                 println("${hero.name} dodged the attack");
 
                 //compulsory use attack card when attacker equipped AzureDragonCrescentBlade weapon
-                if(target.weapons is AzureDragonCrescentBlade){
+                if (target.weapons is AzureDragonCrescentBlade) {
                     (target.weapons as AzureDragonCrescentBlade).active(currentHero = target, targetHero = hero);
-                }else if(target.weapons is RockCleavingAxe) {
+                } else if (target.weapons is RockCleavingAxe) {
 //                    var num = Random.nextInt(0,1)
                     var num = 1
-                    if(num==1){
+                    if (num == 1) {
                         for (c in 1..2) {
                             target.removeCard(target.cards[Random.nextInt(target.cards.size)])
                         }
@@ -168,7 +168,7 @@ class Listener(val hero: Hero) {
                             mainEventManager.notifyListener("AskSaveMe", hero, cardByAttacker);
                         }
                         return false;
-                    }else{
+                    } else {
                         println("${target.name} not use Rock Cleaving Axe effect")
                     }
                 }
@@ -217,7 +217,6 @@ class Listener(val hero: Hero) {
             if (index != 0 && hero.cards.size >= index!!) {
 
 
-
                 hero.removeCard(hero.cards[index - 1])
 
                 return true
@@ -227,6 +226,7 @@ class Listener(val hero: Hero) {
         }
 //        return true
     }
+
     fun toPlifer(target: Hero): Boolean {
 
 
@@ -320,8 +320,6 @@ class Listener(val hero: Hero) {
             }
         }
     }
-
-
 
 
     fun blockBarbariansAssault(target: Hero, cardByAttacker: Card): Boolean {
