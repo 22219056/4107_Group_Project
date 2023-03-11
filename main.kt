@@ -87,6 +87,8 @@ class Game {
                     cardPlaced.active(currentHero = currentHero);
                 }else if(cardPlaced is Plifer){
                     currentHero.PliferHandle(cardPlaced)
+                }else if(cardPlaced is BurnBridges){
+                    currentHero.BurnBridgesHandle(cardPlaced)
                 }
 
                 currentHero.removeCard(cardPlaced);

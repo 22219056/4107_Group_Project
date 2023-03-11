@@ -9,8 +9,8 @@ class HeroFactory {
 
     fun initHeros() {
         listOfHero = listOf<Hero>(
-                ZhouYU(Emperor()),
-                GuanYu(Rebels())
+                ZhouYU(roles.random()),
+                GuanYu(roles.random())
         );
 
         //add event listener
@@ -65,11 +65,11 @@ class Deck {
 //                    SleightofHand(Color.Red,Suit.Heart,7),
 //                    Duel(Color.Black,Suit.Spade,1),
 //                    lightningBolt(Color.Black, Suit.Spade,1)
-//                OathOfPeachGarden(Color.Red, Suit.Heart, 1),
-//                Plifer(Color.Red, Suit.Spade, 4),
-//                        AzureDragonCrescentBlade(Color.Black,Suit.Spade,5),
-                    TwinSwords(Color.Black,Suit.Spade,2)
-
+//                    OathOfPeachGarden(Color.Red, Suit.Heart, 1),
+////                Plifer(Color.Red, Suit.Spade, 4),
+//                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
+//                    TwinSwords(Color.Black, Suit.Spade, 2),
+                    RockCleavingAxe(Color.Red, Suit.Diamond, 5)
             )
 
             return cardList.random();

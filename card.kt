@@ -84,6 +84,15 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     }
 }
 
+class BurnBridges(color: Color, suit: Suit, rank: Int) : TacticsCard() {
+    override var name = "Burn Bridges";
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
+
+
+}
+
 class Plifer(color: Color, suit: Suit, rank: Int) : TacticsCard() {
     override var name = "Plifer";
     override var color = color;
@@ -219,6 +228,13 @@ class TwinSwords(color: Color, suit: Suit, rank: Int):Weapons(){
             }
         }
     }
+}
+
+class RockCleavingAxe(color: Color, suit: Suit, rank: Int):Weapons(){
+    override var name = "Rock Cleaving Axe"
+    override var color = color;
+    override var suit = suit;
+    override var rank = rank;
 }
 
 abstract class Armor : Card {

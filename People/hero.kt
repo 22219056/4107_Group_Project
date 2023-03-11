@@ -183,6 +183,26 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+    open fun BurnBridgesHandle(placedCard: Card){
+        println("Please select a hero you want to demolition her/his card");
+
+        //show list of hero
+        var availableHeroes = listOf<Hero>();
+        for ((index, hero) in heros.withIndex()) {
+            if (hero != this) {
+                println("${availableHeroes.size}. ${hero.name}");
+                availableHeroes += hero;
+            }
+        }
+
+        //selected by attacker
+        var index = readlnOrNull()?.toInt();
+        if (index != null) {
+            mainEventManager.notifySpecificListener("BurnBridges", this, availableHeroes[index], placedCard);
+
+        }
+    }
+
     open fun PliferHandle(placedCard: Card){
         println("Please select a hero you want to take her/his card");
 
@@ -199,6 +219,7 @@ abstract class Hero(role: Role) : Handler {
         var index = readlnOrNull()?.toInt();
         if (index != null) {
             mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
+
         }
     }
 
