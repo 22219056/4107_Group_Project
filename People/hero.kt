@@ -182,6 +182,8 @@ abstract class Hero(role: Role) : Handler {
         }
     }
 
+
+
     open fun BurnBridgesHandle(placedCard: Card){
         println("Please select a hero you want to demolition her/his card");
 
@@ -201,6 +203,7 @@ abstract class Hero(role: Role) : Handler {
 
         }
     }
+
 
     open fun PliferHandle(placedCard: Card){
         println("Please select a hero you want to take her/his card");

@@ -1,4 +1,5 @@
 import People.Hero
+import kotlin.random.Random
 
 class Game {
     lateinit var currentHero: Hero;
@@ -54,7 +55,16 @@ class Game {
                         continue
                     }
                     //currentHero.attackEventHandle(cardPlaced);
-                    currentHero.attackEvent(cardPlaced);
+                    if (currentHero.cards.size == 1 && currentHero.weapons is HeavenHalberd) {
+                        var heroList = Random.nextInt(1, heros.size)
+                        while (heroList > 3 || heroList > heros.size - 1){
+                            heroList = Random.nextInt(1, heros.size)
+                        }
+
+                            for (a in 1..heroList) {
+                                currentHero.attackEvent(cardPlaced);
+                            }
+                    }
                     currentHero.canAttack = false;
 
                 } else if (cardPlaced.name == "Peach") {
@@ -82,14 +92,16 @@ class Game {
                     for (i in 1..2) {
                         currentHero.getCard(Deck.getRadomCard())
                     }
-                }else if(cardPlaced is Duel){
+                } else if (cardPlaced is Duel) {
                     currentHero.duelHandle(cardPlaced)
-                }else if(cardPlaced is OathOfPeachGarden){
+                } else if (cardPlaced is OathOfPeachGarden) {
                     cardPlaced.active(currentHero = currentHero);
-                }else if(cardPlaced is Plifer){
+                } else if (cardPlaced is Plifer) {
                     currentHero.PliferHandle(cardPlaced)
-                }else if(cardPlaced is BurnBridges){
+                } else if (cardPlaced is BurnBridges) {
                     currentHero.BurnBridgesHandle(cardPlaced)
+                } else if (cardPlaced is HeavenHalberd) {
+                    currentHero.weapons = cardPlaced
                 }
 
                 currentHero.removeCard(cardPlaced);

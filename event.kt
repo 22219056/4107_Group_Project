@@ -87,6 +87,7 @@ class Listener(val hero: Hero) {
 
                 // use Rock Cleaving Axe effect
                 if(target.weapons is RockCleavingAxe) {
+
                     var num = Random.nextInt(0,1)
 
                     if(num==1){
@@ -139,11 +140,9 @@ class Listener(val hero: Hero) {
                 //compulsory use attack card when attacker equipped AzureDragonCrescentBlade weapon
                 if(target.weapons is AzureDragonCrescentBlade){
                     (target.weapons as AzureDragonCrescentBlade).active(currentHero = target, targetHero = hero);
-                }
-                // use Rock Cleaving Axe effect
-                if(target.weapons is RockCleavingAxe) {
-                    var num = Random.nextInt(0,1)
-
+                }else if(target.weapons is RockCleavingAxe) {
+//                    var num = Random.nextInt(0,1)
+                    var num = 1
                     if(num==1){
                         for (c in 1..2) {
                             target.removeCard(target.cards[Random.nextInt(target.cards.size)])
