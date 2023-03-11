@@ -213,11 +213,11 @@ class Listener(val hero: Hero) {
             println("${hero.name}")
             println("Please place a card to demolition target card");
             hero.displayCardFromList(hero.cards)
-            var index = readLine()?.toInt();
+            var index = Random.nextInt(hero.cards.size);
             if (index != 0 && hero.cards.size >= index!!) {
 
 
-                hero.removeCard(hero.cards[index - 1])
+                hero.removeCard(hero.cards[index])
 
                 return true
             }
@@ -234,13 +234,14 @@ class Listener(val hero: Hero) {
             println("${hero.name}")
             println("Please place a card to take");
             hero.displayCardFromList(hero.cards)
-            var index = readLine()?.toInt();
+            var index = Random.nextInt(hero.cards.size);
+
             if (index != 0 && hero.cards.size >= index!!) {
 
                 //take target hero card
-                target.getCard(hero.cards[index - 1])
+                target.getCard(hero.cards[index])
 
-                hero.removeCard(hero.cards[index - 1])
+                hero.removeCard(hero.cards[index])
 
                 return true
             }
@@ -418,14 +419,14 @@ class Listener(val hero: Hero) {
         if (hero.hasPeachTypeCard()) {
             while (true) {
                 println("${hero.name}, you want to save ${target.name} life?(yes/no)");
-                var question = readLine();
-                if (question == "yes") {
+                var question = Random.nextInt(0,1);
+                if (question == 1) {
                     var peachCard = hero.askHeroPlaceACard(listOf("Peach"));
                     hero.removeCard(peachCard);
                     target.HP += 1;
                     println("you save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
                     return true;
-                } else if (question == "no") {
+                } else if (question == 0) {
                     return false;
                 } else {
                     println("invalid input, please input again!");

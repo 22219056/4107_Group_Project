@@ -133,7 +133,7 @@ abstract class Hero(role: Role) : Handler {
             println("Please place a card");
             this.displayCardFromList(cardList);
             println("0.[cancel place a card]");
-            var index = readLine()?.toInt();
+            var index = Random.nextInt(cardList.size);
 
             if (index != 0 && cardList.size >= index!!) {
                 return cardList[index - 1];
@@ -234,7 +234,7 @@ abstract class Hero(role: Role) : Handler {
         }
 
         //selected by attacker
-        var index = readlnOrNull()?.toInt();
+        var index = Random.nextInt(availableHeroes.size);
         if (index != null) {
             mainEventManager.notifySpecificListener("BurnBridges", this, availableHeroes[index], placedCard);
 
@@ -255,7 +255,8 @@ abstract class Hero(role: Role) : Handler {
         }
 
         //selected by attacker
-        var index = readlnOrNull()?.toInt();
+        var index = Random.nextInt(availableHeroes.size);
+
         if (index != null) {
             mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
 
@@ -307,7 +308,7 @@ abstract class Hero(role: Role) : Handler {
         }
 
         //selected by attacker
-        var index = readlnOrNull()?.toInt();
+        var index = Random.nextInt(availableHeroes.size);
         if (index != null) {
             mainEventManager.notifySpecificListener("Duel", this, availableHeroes[index], placedCard);
         }
@@ -357,7 +358,7 @@ abstract class Hero(role: Role) : Handler {
         }
 
         //selected by attacker
-        var index = readlnOrNull()?.toInt();
+        var index = Random.nextInt(availableHeroes.size);
         if (index != null) {
             availableHeroes[index].setJudgmentZone(placedCard)
         }

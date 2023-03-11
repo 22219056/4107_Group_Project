@@ -63,10 +63,10 @@ class Deck {
 //                    BarbariansAssault(Color.Black,Suit.Club,7),
 //                    HailofArrows(Color.Red,Suit.Heart,1),
 //                    SleightofHand(Color.Red,Suit.Heart,7),
-                    Duel(Color.Black,Suit.Spade,1),
-                    lightningBolt(Color.Black, Suit.Spade,1)
+//                    Duel(Color.Black,Suit.Spade,1),
+//                    lightningBolt(Color.Black, Suit.Spade,1),
 //                    OathOfPeachGarden(Color.Red, Suit.Heart, 1),
-////                Plifer(Color.Red, Suit.Spade, 4),
+//                Plifer(Color.Red, Suit.Spade, 4),
 //                    AzureDragonCrescentBlade(Color.Black, Suit.Spade, 5),
 //                    TwinSwords(Color.Black, Suit.Spade, 2),
 //                    RockCleavingAxe(Color.Red, Suit.Diamond, 5),
