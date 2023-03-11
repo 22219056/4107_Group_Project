@@ -10,7 +10,9 @@ import DodgeCard
 import Mounts
 import PeachCard
 import Role
+import TacticsCard
 import heros
+import lightningBolt
 import mainEventManager
 import java.util.ArrayDeque
 
@@ -51,12 +53,16 @@ abstract class Hero(role: Role) : Handler {
             "attack" to Attack(this)
     )
 
-
+    open fun fundas(s:Int):Int{
+        var s = 0
+        return s
+    }
     open fun checkOnlyDodge_Attack_Peach(currentHero: Hero): Int {
         var onlyCard = 0
         for (c in currentHero.cards) {
-            if (c !is DodgeCard || c !is AttackCard) {
+            if (!c.name.equals("Dodge") || !c.name.equals("Attack") ) {
                 onlyCard += 1
+
 //                var asd = readLine()
             } else {
                 if (currentHero.HP < currentHero.maxHP && c is PeachCard) {

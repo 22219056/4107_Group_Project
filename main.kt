@@ -13,6 +13,10 @@ class Game {
         }
         println("start phase");
 
+
+    }
+
+    fun judgmentPhase() {
         var nextHero: Hero
 
         if (heros.indexOf(currentHero) + 1 == heros.size) { //last man
@@ -31,8 +35,6 @@ class Game {
         }
     }
 
-    fun judgmentPhase() {}
-
 
     fun mainPhase(name: String) {
 
@@ -43,7 +45,7 @@ class Game {
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
 
-
+        var flash = 1
 
         while (currentHero.cards.size > 0) {
 
@@ -61,7 +63,7 @@ class Game {
 
 
 
-            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero)==0) {
+            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero)==0 || flash==0) {
 
                 println()
                 discardPhase()
@@ -130,6 +132,7 @@ class Game {
                 } else if (cardPlaced is lightningBolt) {
                     if (currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
                         println("You already have a lightningBolt\n")
+                       flash =  currentHero.fundas(0)
                         continue
                     } else {
                         currentHero.judgmentZone.push(cardPlaced)
@@ -174,6 +177,7 @@ class Game {
 
                 currentHero = hero;
                 startPhase();
+                judgmentPhase()
                 if(hero.HP>0){
                     mainPhase("${hero.name}");
                     endPhase();
