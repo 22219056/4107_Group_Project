@@ -93,27 +93,29 @@ abstract class Hero(role: Role) : Handler {
 
     //Compulsory
     open fun askHeroPlaceACard(filterList: List<String>? = null): Card {
-        var cardList = mutableListOf<Card>();
-        cardList = if (filterList != null) {
-            filterCardFromCards(filterList);
-        } else {
-            cards;
-        }
+        return cards.random();
 
-        while (true) {
-            println("Please place a card");
-            this.displayCardFromList(cardList);
-//            var index = readLine()?.toInt(); //card of index
-            var index = Random.nextInt(cardList.size); //card of index
-
-
-            if (index !== null && cards.size >= index && index!! > 0) {
-//                return cards[index - 1];
-                return cards[index];
-            }
-            println("Not valid input, Please input again.");
-            continue;
-        }
+//        var cardList = mutableListOf<Card>();
+//        cardList = if (filterList != null) {
+//            filterCardFromCards(filterList);
+//        } else {
+//            cards;
+//        }
+//
+//        while (true) {
+//            println("Please place a card");
+//            this.displayCardFromList(cardList);
+////            var index = readLine()?.toInt(); //card of index
+//            var index = Random.nextInt(cardList.size); //card of index
+//
+//
+//            if (index !== null && cards.size >= index && index!! > 0) {
+////                return cards[index - 1];
+//                return cards[index];
+//            }
+//            println("Not valid input, Please input again.");
+//            continue;
+//        }
     }
 
     //Selection
