@@ -61,7 +61,7 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
         if(judgement != null){
-            println("judenment card: "+this.name+"\njudgement card is" + judgement.getCardString())
+            println("judenment card: "+this.name+"\njudgement card is " + judgement.getCardString())
             if (judgement.suit.equals(Suit.Heart)) {
                 println("abandon false")
                 currentHero.abandonRound = false
@@ -70,7 +70,7 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
             } else {
                 println("abandon true")
                 currentHero.abandonRound = true
-//                println("judgement card is" + judgement.getCardString())
+//                println("judgement card is " + judgement.getCardString())
 
             }
         }
@@ -85,14 +85,16 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
 
     override fun active(currentHero: Hero, judgement: Card?, targetHero: Hero?) {
         if(judgement != null){
-            println("judenment card: "+this.name+"\njudgement card is" + judgement.getCardString())
+            println("judenment card: "+this.name+"\njudgement card is " + judgement.getCardString())
 
             if (judgement.suit.equals(Suit.Spade) && (judgement.rank <= 9 && judgement.rank >= 2)) {
                 println("bingo")
                 currentHero.HP -= 3
                 if(currentHero.HP<=0){
+                    mainEventManager.notifyListener("AskingSaveMe", currentHero, this);
                     currentHero.alive = false
                     println("${currentHero.name} is dead by lightningBolt")
+
 //                    heros.remove(currentHero)
                 }
 

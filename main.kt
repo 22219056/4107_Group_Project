@@ -299,7 +299,7 @@ class Game {
     }
     fun checkEndGameState(){
         if(isEmperorDeath()){
-            println("Rebel and Traitor Win The Game")
+            println("Rebel Win The Game")
             exitProcess(0)
         }else if(allRebelDeath()){
             println("Monarch and Minister Win The Game")

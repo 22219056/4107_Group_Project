@@ -223,9 +223,9 @@ abstract class Hero(role: Role) : Handler {
         println("Please select a hero you want to demolition her/his card");
 
         //show list of hero
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }
@@ -244,9 +244,9 @@ abstract class Hero(role: Role) : Handler {
         println("Please select a hero you want to take her/his card");
 
         //show list of hero
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }
@@ -259,7 +259,7 @@ abstract class Hero(role: Role) : Handler {
         }
 
         var index = Random.nextInt(availableHeroes.size);
-        println(index)
+
 
         if (index != null) {
             mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
@@ -271,9 +271,9 @@ abstract class Hero(role: Role) : Handler {
         println("Please select a hero you want to attack");
 
         //show list of hero
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }
@@ -303,9 +303,9 @@ abstract class Hero(role: Role) : Handler {
         println("Please select a hero you want to duel");
 
         //show list of hero
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }
@@ -317,7 +317,7 @@ abstract class Hero(role: Role) : Handler {
 
         //selected by attacker
         var index = Random.nextInt(availableHeroes.size);
-        println(index)
+
         if (index != null) {
             mainEventManager.notifySpecificListener("Duel", this, availableHeroes[index], placedCard);
         }
@@ -326,9 +326,9 @@ abstract class Hero(role: Role) : Handler {
     open fun barbariansAssaultHandle(placedCard: Card) {
         println("${this.name} use ${placedCard.name}, all hero need to use [Attack] card to dodge the hurt\n")
 
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
 //                println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
 
@@ -342,9 +342,9 @@ abstract class Hero(role: Role) : Handler {
     open fun HailofArrowsHandle(placedCard: Card) {
         println("${this.name} use ${placedCard.name}, all hero need to use [Dodge] card to dodge the hurt\n")
 
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for ( hero in heros) {
+            if (hero != this && hero.alive) {
                 availableHeroes += hero;
 
             }
@@ -358,9 +358,9 @@ abstract class Hero(role: Role) : Handler {
         println("Please select a hero you want to place the Acedia");
 
         //show list of hero
-        var availableHeroes = listOf<Hero>();
-        for ((index, hero) in heros.withIndex()) {
-            if (hero != this) {
+        var availableHeroes = mutableListOf<Hero>();
+        for (hero in heros) {
+            if (hero != this && hero.alive) {
                 println("${availableHeroes.size}. ${hero.name}");
                 availableHeroes += hero;
             }

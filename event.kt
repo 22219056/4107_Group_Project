@@ -28,7 +28,10 @@ class EventManager {
                 if (listener.askSaveMe(target, card)) {
                     break;
                 };
-            } else if (eventType == "barbariansAssault") {
+
+            } else if (eventType == "AskingSaveMe") {
+                listener.AskingSaveMe(listener.hero, card)
+            }else if (eventType == "barbariansAssault") {
                 listener.blockBarbariansAssault(listener.hero, card)
             } else if (eventType == "hailofArrowsAssault") {
                 listener.blockHailofArrows(listener.hero, card)
@@ -305,7 +308,11 @@ class Listener(val hero: Hero) {
         }
     }
 
+    fun AskingSaveMe(target: Hero, cardByTarget: Card): Boolean {
+        println("${target.name} asking for peach")
 
+        return false
+    }
     fun blockBarbariansAssault(target: Hero, cardByAttacker: Card): Boolean {
 
         if (hero.hasAttackTypeCard()) {
@@ -399,7 +406,6 @@ class Listener(val hero: Hero) {
     }
 
     fun askSaveMe(target: Hero, cardByTarget: Card): Boolean {
-
         if(hero.hasPeachTypeCard()) {
             var choiceOfSaveLife = (0..1).random()
             if (choiceOfSaveLife == 0) {
