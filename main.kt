@@ -38,8 +38,6 @@ class Game {
 
     fun mainPhase(name: String) {
 
-
-
 //        ANSIColorConsole.red(toString(currentHero.showCurrentHP()));
 
         currentHero.canAttack = true;

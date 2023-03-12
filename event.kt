@@ -207,46 +207,56 @@ class Listener(val hero: Hero) {
 
 
     fun toBridges(target: Hero): Boolean {
-
-
-        while (true) {
-            println("${hero.name}")
-            println("Please place a card to demolition target card");
-            hero.displayCardFromList(hero.cards)
-            var index = readLine()?.toInt();
-            if (index != 0 && hero.cards.size >= index!!) {
-
-
-                hero.removeCard(hero.cards[index - 1])
-
-                return true
-            }
-            println("Not valid input, Please input again.");
-            continue;
+        if(hero.cards.size > 0){
+            println("${target.name} place a card to demolition target card");
+            hero.randomRemoveCard(1);
+            return true;
         }
+        return false
+
+//        while (true) {
+//            println("${hero.name}")
+//            println("Please place a card to demolition target card");
+//            hero.displayCardFromList(hero.cards)
+//            var index = readLine()?.toInt();
+//            if (index != 0 && hero.cards.size >= index!!) {
+//
+//
+//                hero.removeCard(hero.cards[index - 1])
+//
+//                return true
+//            }
+//            println("Not valid input, Please input again.");
+//            continue;
+//        }
 //        return true
     }
 
     fun toPlifer(target: Hero): Boolean {
-
-
-        while (true) {
-            println("${hero.name}")
-            println("Please place a card to take");
-            hero.displayCardFromList(hero.cards)
-            var index = readLine()?.toInt();
-            if (index != 0 && hero.cards.size >= index!!) {
-
-                //take target hero card
-                target.getCard(hero.cards[index - 1])
-
-                hero.removeCard(hero.cards[index - 1])
-
-                return true
-            }
-            println("Not valid input, Please input again.");
-            continue;
+        if(hero.cards.size > 0){
+            var pliferCard = hero.cards.random();
+            target.getCard(pliferCard);
+            hero.removeCard(pliferCard);
+            return true;
         }
+        return false;
+//        while (true) {
+//            println("${hero.name}")
+//            println("Please place a card to take");
+//            hero.displayCardFromList(hero.cards)
+//            var index = readLine()?.toInt();
+//            if (index != 0 && hero.cards.size >= index!!) {
+//
+//                //take target hero card
+//                target.getCard(hero.cards[index - 1])
+//
+//                hero.removeCard(hero.cards[index - 1])
+//
+//                return true
+//            }
+//            println("Not valid input, Please input again.");
+//            continue;
+//        }
 //        return true
     }
 
@@ -415,24 +425,15 @@ class Listener(val hero: Hero) {
     }
 
     fun askSaveMe(target: Hero, cardByTarget: Card): Boolean {
-        if (hero.hasPeachTypeCard()) {
-            while (true) {
-                println("${hero.name}, you want to save ${target.name} life?(yes/no)");
-                var question = readLine();
-                if (question == "yes") {
-                    var peachCard = hero.askHeroPlaceACard(listOf("Peach"));
-                    hero.removeCard(peachCard);
-                    target.HP += 1;
-                    println("you save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
-                    return true;
-                } else if (question == "no") {
-                    return false;
-                } else {
-                    println("invalid input, please input again!");
-                    continue;
-                }
+        if(hero.hasPeachTypeCard()){
+            var choiceOfSaveLife = (0..1).random()
+            if(choiceOfSaveLife == 0) {
+                var peachCard = hero.askHeroPlaceACard(kotlin.collections.listOf("Peach"));
+                hero.removeCard(peachCard);
+                target.HP += 1;
+                println("${hero.name} save ${target.name} life, ${ANSIColorConsole.red("♥")} HP = ${target.HP}");
+                return true;
             }
-            return true;
         }
         return false
     }
