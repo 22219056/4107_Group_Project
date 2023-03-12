@@ -63,10 +63,15 @@ class AcediaCard(color: Color, suit: Suit, rank: Int) : TacticsCard() {
         if(judgement != null){
             println("judenment card: "+this.name+"\njudgement card is" + judgement.getCardString())
             if (judgement.suit.equals(Suit.Heart)) {
+                println("abandon false")
                 currentHero.abandonRound = false
+
+
             } else {
-//                println("judgement card is" + judgement.getCardString())
+                println("abandon true")
                 currentHero.abandonRound = true
+//                println("judgement card is" + judgement.getCardString())
+
             }
         }
     }

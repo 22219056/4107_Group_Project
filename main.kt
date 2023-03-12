@@ -1,6 +1,7 @@
 import People.Hero
 import People.KingLess.DiaoChan
 import People.Wei.WeiHero
+import kotlin.contracts.contract
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
@@ -92,13 +93,15 @@ class Game {
 
         currentHero.canAttack = true;
         currentHero.drawPhase(currentHero)
-
+        if (currentHero.abandonRound){
+            return
+        }
         var flash = 1
 
         while (currentHero.cards.size > 0) {
 
             if (!currentHero.judgmentZone.isEmpty()) println("JudmentZone : ${currentHero.judgmentZone?.peek()?.name}")
-            println("${name}'s turn:");
+            println("${name}'s turn: ");
             currentHero.showCurrentHP();
 
             println("EquipmentCard Weapons: ${currentHero.weapons?.name} | Armor: ${currentHero.armor?.name}")
@@ -124,6 +127,7 @@ class Game {
                 if (cardPlaced.name == "Attack") {
                     if (!currentHero.canAttack && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
                         println("You can not attack again\n")
+                        flash = currentHero.flashRepeat(0)
                         continue
                     }
                     //currentHero.attackEventHandle(cardPlaced);
@@ -145,6 +149,7 @@ class Game {
                 } else if (cardPlaced.name == "Peach") {
                     if (currentHero.HP == currentHero.maxHP) {
                         println("You HP is max, please you again select other card")
+                        flash = currentHero.flashRepeat(0)
                         continue
                     } else {
                         currentHero.HP += 1
@@ -187,6 +192,7 @@ class Game {
                     }
                 } else if (cardPlaced is DodgeCard) {
                     println("You can not use Dodge card")
+                    flash = currentHero.flashRepeat(0)
                     continue
                 }
 
