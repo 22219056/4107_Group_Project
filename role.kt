@@ -9,40 +9,43 @@ class Emperor: Role{
     override fun getEnemies():List<Hero> {
         var enemies = listOf<Hero>();
         for(hero in heros){
-            if(hero.role is Rebels || hero.role is Traitor)
+            if(hero.role is Rebel || hero.role is Traitor)
                 enemies += hero;
         }
         return enemies;
     }
 }
-class Rebels: Role{
-    override var name: String = "Rebels";
+class Rebel: Role{
+    override var name: String = "Rebel";
     override fun getEnemies():List<Hero> {
         var enemies = listOf<Hero>();
         for(hero in heros){
-            if(hero.role is Emperor || hero.role is Loyalist)
+            if(hero.role is Emperor || hero.role is Minister)
                 enemies += hero;
         }
         return enemies;
     }
 }
-class Loyalist: Role{
-    override var name: String = "Loyalist";
+class Minister: Role{
+    override var name: String = "Minister";
     override fun getEnemies():List<Hero> {
         var enemies = listOf<Hero>();
         for(hero in heros){
-            if(hero.role is Rebels || hero.role is Traitor)
+            if(hero.role is Rebel || hero.role is Traitor)
                 enemies += hero;
         }
         return enemies;
     }
 }
+
+
+
 class Traitor: Role{
     override var name: String = "Traitor";
     override fun getEnemies():List<Hero> {
         var enemies = listOf<Hero>();
         for(hero in heros){
-            if(hero.role is Emperor || hero.role is Loyalist)
+            if(hero.role is Emperor || hero.role is Minister)
                 enemies += hero;
         }
         return enemies;

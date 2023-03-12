@@ -1,5 +1,6 @@
 import People.Hero
 import People.KingLess.DiaoChan
+import People.Wei.WeiHero
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
@@ -11,35 +12,47 @@ class Game {
         println("start phase");
     }
 
-    fun checkHeroDied(){
-        var diedHerosIndex = listOf<Int>();
+    fun checkHeroDied(): String {
+        var rebelDie = 0
+        var heroName = ""
 
         for ((index, hero) in heros.withIndex()) {
-            if(hero.HP<=0){
+            if (hero.HP <= 0) {
                 println("${hero.name} has died")
-                diedHerosIndex += index
-//                heros.removeAt(index)
-//                mainEventManager.listeners.removeAt(index)
-                println(heros.size)
-//                if(heros.size>1){
-//                    continue
-//                }
+                if (hero.role is Rebel) {
+                    rebelDie += 1
+                    heroName = hero.name
+
+                    if (rebelDie == 2) {
+                        println("Monarch Win The Game")
+                        exitProcess(0)
+                    }
+                } else if (hero.role is Emperor) {
+                    println("Rebel Win The Game")
+                    exitProcess(0)
+                } else if (hero.role is Minister) {
+                    heroName = hero.name
+                }
+
             }
         }
 
-        for(diedHeroindex in diedHerosIndex){
+        return heroName
+    }
+
+    fun removeHero() {
+        var diedHerosIndex = listOf<Int>();
+
+        for ((index, hero) in heros.withIndex()) {
+            if (hero.HP <= 0) {
+                diedHerosIndex += index
+            }
+        }
+        for (diedHeroindex in diedHerosIndex) {
             heros.removeAt(diedHeroindex)
             mainEventManager.listeners.removeAt(diedHeroindex)
         }
-
-        if(heros.size==1){
-            println(heros.size)
-            println("win")
-            exitProcess(0)
-        }
     }
-
-
 
 
     fun judgmentPhase() {
@@ -55,7 +68,7 @@ class Game {
 
         for (Cards in currentHero.judgmentZone) {
             currentHero.judgmentZone.pop().active(currentHero, currentHero.getJudgement(), nextHero)
-            if(currentHero.HP<=0){
+            if (currentHero.HP <= 0) {
                 break
             }
         }
@@ -84,10 +97,10 @@ class Game {
             var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
 
 
+//var asd = readln()
 
 
-
-            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero)==0 || flash==0) {
+            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero) == 0 || flash == 0) {
 
                 println()
                 discardPhase()
@@ -96,7 +109,7 @@ class Game {
                 //player placed a card
 //                var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
 
-                println("you use [${cardPlaced.getCardString()}]");
+                println("you use [${cardPlaced.getCardString()}]\n");
                 if (cardPlaced.name == "Attack") {
                     if (!currentHero.canAttack && !currentHero.weapons?.name.equals("Zhuge Crossbow")) {
                         println("You can not attack again\n")
@@ -156,7 +169,7 @@ class Game {
                 } else if (cardPlaced is lightningBolt) {
                     if (currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
                         println("You already have a lightningBolt\n")
-                       flash =  currentHero.fundas(0)
+                        flash = currentHero.fundas(0)
                         continue
                     } else {
                         currentHero.judgmentZone.push(cardPlaced)
@@ -193,7 +206,7 @@ class Game {
 
     fun endPhase() {
         //diao chan can draw one card
-        if(currentHero is DiaoChan){
+        if (currentHero is DiaoChan) {
             (currentHero as DiaoChan).Eclipse();
         }
 
@@ -204,19 +217,20 @@ class Game {
         while (true) {
 
             for (hero in heros) {
-
+                if (hero.name == checkHeroDied()) {
+                    continue
+                }
                 currentHero = hero;
                 startPhase();
                 judgmentPhase()
-                if(hero.HP>0){
+                if (hero.HP > 0) {
 
                     mainPhase("${hero.name}");
                     endPhase();
                     println();
                 }
-
-
             }
+            removeHero()
         }
 
     }

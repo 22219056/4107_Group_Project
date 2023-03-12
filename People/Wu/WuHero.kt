@@ -6,21 +6,23 @@ import People.Handler
 import People.Hero
 import Role
 
-abstract class WuHero(role: Role): Hero(role), Handler {
+abstract class WuHero(role: Role) : Hero(role), Handler {
     var nation = "Wu"
     var otherHero: Handler? = null
 
 
-    override fun setNext(h: Handler){
+    override fun setNext(h: Handler) {
         otherHero?.setNext(h)
     }
 
     override fun handle(): Boolean {
         TODO("Not yet implemented")
     }
+
+
 }
 
-class SunQuan(role: Role): WuHero(role){
+class SunQuan(role: Role) : WuHero(role) {
     override var name = "Sun Quan";
     override var HP = 4;
     override var maxHP = 4;
@@ -29,7 +31,7 @@ class SunQuan(role: Role): WuHero(role){
 
 }
 
-class GanNing(role: Role): WuHero(role){
+class GanNing(role: Role) : WuHero(role) {
     override var name = "Gan Ning";
     override var HP = 4;
     override var maxHP = 4;
@@ -38,7 +40,7 @@ class GanNing(role: Role): WuHero(role){
 
 }
 
-class LuMeng(role: Role): WuHero(role){
+class LuMeng(role: Role) : WuHero(role) {
     override var name = "Lu Meng";
     override var HP = 4;
     override var maxHP = 4;
@@ -47,7 +49,7 @@ class LuMeng(role: Role): WuHero(role){
 
 }
 
-class HuangGai(role: Role): WuHero(role){
+class HuangGai(role: Role) : WuHero(role) {
     override var name = "Huang Gai";
     override var HP = 4;
     override var maxHP = 4;
@@ -56,7 +58,7 @@ class HuangGai(role: Role): WuHero(role){
 
 }
 
-class ZhouYU(role: Role): WuHero(role){
+class ZhouYU(role: Role) : WuHero(role) {
     override var name = "Zhou YU";
     override var HP = 3;
     override var maxHP = 3;
@@ -70,10 +72,9 @@ class ZhouYU(role: Role): WuHero(role){
     }
 
 
-
 }
 
-class LuXun(role: Role): WuHero(role){
+class LuXun(role: Role) : WuHero(role) {
     override var name = "Lu Xun";
     override var HP = 3;
     override var maxHP = 3;
@@ -83,7 +84,7 @@ class LuXun(role: Role): WuHero(role){
 }
 
 
-class DaQiao(role: Role): WuHero(role){
+class DaQiao(role: Role) : WuHero(role) {
     override var name = "Da Qiao";
     override var HP = 3;
     override var maxHP = 3;
@@ -93,7 +94,7 @@ class DaQiao(role: Role): WuHero(role){
 
 }
 
-class SunShangXiang(role: Role): WuHero(role){
+class SunShangXiang(role: Role) : WuHero(role) {
     override var name = "Sun Shang Xiang";
     override var HP = 3;
     override var maxHP = 3;

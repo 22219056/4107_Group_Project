@@ -39,7 +39,7 @@ abstract class Hero(role: Role) : Handler {
     open var mounts: Card? = null
     var judgmentZone = ArrayDeque<Card>()
     var judgmentFlag: Boolean = false
-    open var alive : Boolean = true
+    open var alive: Boolean = true
     var abandonRound: Boolean = false
 
     var canAttack: Boolean = true;
@@ -53,23 +53,23 @@ abstract class Hero(role: Role) : Handler {
             "attack" to Attack(this)
     )
 
-    open fun fundas(s:Int):Int{
+    open fun fundas(s: Int): Int {
         var s = 0
         return s
     }
+
     open fun checkOnlyDodge_Attack_Peach(currentHero: Hero): Int {
         var onlyCard = 0
         for (c in currentHero.cards) {
-            if (c !is DodgeCard || c !is AttackCard ) {
+            if (c !is DodgeCard || c !is AttackCard) {
+                onlyCard += 1
+            }
+
+            if (currentHero.HP < currentHero.maxHP && c is PeachCard) {
                 onlyCard += 1
 
-//                var asd = readLine()
-            } else {
-                if (currentHero.HP < currentHero.maxHP && c is PeachCard) {
-                    onlyCard += 1
-//                    var asd = readLine()
-                }
             }
+
         }
         return onlyCard
     }

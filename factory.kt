@@ -4,16 +4,20 @@ import People.Shu.*
 import People.Wu.*
 import People.Wei.*
 
+import kotlin.random.Random
+
 class HeroFactory {
-    var roles = mutableListOf<Role>(Emperor(), Rebels(), Loyalist(), Traitor());
+    var roles = mutableListOf<Role>(Emperor(), Minister(), Rebel(), Rebel());
     lateinit var listOfHero: MutableList<Hero>;
 
     fun initHeros() {
         listOfHero = mutableListOf<Hero>(
-                ZhouYU(Emperor()),
-                GuanYu(Rebels()),
-                DiaoChan(Rebels())
+                CaoCao(Emperor()),
+                ZhouYU(Minister()),
+                GuanYu(Rebel()),
+                DiaoChan(Rebel())
         );
+
 
         //add event listener
         for (hero in listOfHero) {
@@ -58,7 +62,7 @@ class Deck {
             var cardList = listOf(
                     AttackCard(Color.Black, Suit.Spade, 2),
 //                    DodgeCard(color, suit, rank),
-//                    PeachCard(color, suit, rank),
+                    PeachCard(color, suit, rank),
                     ZhugeCrossbow(Color.Black, Suit.Spade, 2),
 //                    EightTrigrams(Color.Black, Suit.Spade, 2),
 //                    AcediaCard(Color.Red, Suit.Heart,6),
