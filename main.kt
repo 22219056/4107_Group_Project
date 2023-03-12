@@ -11,6 +11,7 @@ class Game {
 
     fun startPhase() {
         println("start phase");
+
     }
 
     fun checkEndGame(): String {
@@ -53,6 +54,7 @@ class Game {
         return heroName
     }
 
+
     fun removeHero() {
         var diedHerosIndex = listOf<Int>();
 
@@ -62,7 +64,12 @@ class Game {
             }
         }
         for (diedHeroindex in diedHerosIndex) {
-            heros.removeAt(diedHeroindex)
+            try{
+                heros.removeAt(diedHeroindex)
+                mainEventManager.listeners.removeAt(diedHeroindex)
+            }catch (e: Exception){
+                continue;
+            }
 //            mainEventManager.listeners.removeAt(diedHeroindex)
         }
     }
@@ -202,7 +209,7 @@ class Game {
                 }
 
                 currentHero.removeCard(cardPlaced);
-                checkEndGame()
+                checkEndGameState();
             }
             println()
         }
@@ -217,11 +224,6 @@ class Game {
             currentHero.cards.remove(selectedCard);
             println("You discard [${selectedCard.getCardString()}]");
 
-//            var playerInput = readLine();
-//            var cardPlaced = currentHero.cards[playerInput!!.toInt() - 1];
-//            println("You discard [${cardPlaced.getCardString()}]")
-//            currentHero.removeCard(cardPlaced);
-//            currentHero.displayCards();
         }
 
     }
@@ -257,6 +259,53 @@ class Game {
 
     }
 
+    fun isEmperorDeath():Boolean{
+        for(hero in heros){
+            if(hero.role is Emperor && hero.HP == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+    fun allTraitorDeath():Boolean{
+        var numOfTraitor = 0;
+        var death = 0;
+        for(hero in heros){
+            if(hero.role is Traitor){
+                numOfTraitor += 1
+                if(hero.HP == 0)
+                    death += 1
+            }
+        }
+        if(numOfTraitor != 0 && death != 0){
+            return numOfTraitor == death;
+        }
+        return false;
+    }
+    fun allRebelDeath():Boolean{
+        var numOfRebel = 0;
+        var death = 0;
+        for(hero in heros){
+            if(hero.role is Rebel){
+                numOfRebel += 1
+                if(hero.HP == 0)
+                    death += 1
+            }
+        }
+        if(numOfRebel != 0 && death != 0){
+            return numOfRebel == death;
+        }
+        return false;
+    }
+    fun checkEndGameState(){
+        if(isEmperorDeath()){
+            println("Rebel and Traitor Win The Game")
+            exitProcess(0)
+        }else if(allRebelDeath()){
+            println("Monarch and Minister Win The Game")
+            exitProcess(0)
+        }
+    }
 }
 
 

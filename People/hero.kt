@@ -253,8 +253,13 @@ abstract class Hero(role: Role) : Handler {
         }
 
         //selected by attacker
-        var index = Random.nextInt(availableHeroes.size);
+        if (availableHeroes.isEmpty()) {
+            println("No heroes available to steal from.")
+            return
+        }
 
+        var index = Random.nextInt(availableHeroes.size);
+        println(index)
 
         if (index != null) {
             mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
@@ -305,9 +310,14 @@ abstract class Hero(role: Role) : Handler {
                 availableHeroes += hero;
             }
         }
+        if (availableHeroes.isEmpty()) {
+            println("No heroes available to duel from.")
+            return
+        }
 
         //selected by attacker
         var index = Random.nextInt(availableHeroes.size);
+        println(index)
         if (index != null) {
             mainEventManager.notifySpecificListener("Duel", this, availableHeroes[index], placedCard);
         }
@@ -356,6 +366,10 @@ abstract class Hero(role: Role) : Handler {
             }
         }
 
+        if(availableHeroes.isEmpty()){
+            println("No heroes available to acedia")
+            return;
+        }
         //selected by attacker
         var index = Random.nextInt(availableHeroes.size);
         if (index != null) {
