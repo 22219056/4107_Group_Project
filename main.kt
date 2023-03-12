@@ -1,4 +1,5 @@
 import People.Hero
+import People.KingLess.DiaoChan
 import kotlin.random.Random
 import kotlin.system.exitProcess
 
@@ -166,6 +167,10 @@ class Game {
 
     fun endPhase() {
         //diao chan can draw one card
+        if(currentHero is DiaoChan){
+            (currentHero as DiaoChan).Eclipse();
+        }
+
         println("end of ${currentHero.name}'s turn");
     }
 

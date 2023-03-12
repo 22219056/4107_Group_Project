@@ -45,4 +45,17 @@ class DiaoChan(role: Role): KinglessHero(role){
     override var gender = Gender.Female;
     override var cards = mutableListOf<Card>();
 
+    fun Eclipse(){
+        println("At the end of turn, I may draw a card")
+        var card1 = Deck.getRadomCard();
+        var card2 = Deck.getRadomCard();
+        if(cards.size == 0){
+            println("As i have no cards in my hand so i can draw two cards");
+            getCard(card1);
+            getCard(card2);
+        }else{
+            getCard(card1);
+        }
+
+    }
 }

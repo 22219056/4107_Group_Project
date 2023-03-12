@@ -89,6 +89,8 @@ class DaQiao(role: Role): WuHero(role){
     override var maxHP = 3;
     override var gender = Gender.Female;
     override var cards = mutableListOf<Card>();
+
+
 }
 
 class SunShangXiang(role: Role): WuHero(role){
