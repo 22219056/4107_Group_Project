@@ -12,17 +12,26 @@ class Game {
     }
 
     fun checkHeroDied(){
+        var diedHerosIndex = listOf<Int>();
+
         for ((index, hero) in heros.withIndex()) {
             if(hero.HP<=0){
                 println("${hero.name} has died")
-                heros.removeAt(index)
-                mainEventManager.listeners.removeAt(index)
+                diedHerosIndex += index
+//                heros.removeAt(index)
+//                mainEventManager.listeners.removeAt(index)
                 println(heros.size)
 //                if(heros.size>1){
 //                    continue
 //                }
             }
         }
+
+        for(diedHeroindex in diedHerosIndex){
+            heros.removeAt(diedHeroindex)
+            mainEventManager.listeners.removeAt(diedHeroindex)
+        }
+
         if(heros.size==1){
             println(heros.size)
             println("win")
