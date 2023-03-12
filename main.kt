@@ -12,8 +12,10 @@ class Game {
         println("start phase");
     }
 
-    fun checkHeroDied(): String {
+    fun checkEndGame(): String {
         var rebelDie = 0
+        var traitorDie = 0
+        var ministerDie = 0
         var heroName = ""
 
         for ((index, hero) in heros.withIndex()) {
@@ -23,15 +25,24 @@ class Game {
                     rebelDie += 1
                     heroName = hero.name
 
-                    if (rebelDie == 2) {
-                        println("Monarch Win The Game")
+                    if (rebelDie == 2 &&  traitorDie == 1) {
+                        println("Monarch and Minister Win The Game")
                         exitProcess(0)
                     }
                 } else if (hero.role is Emperor) {
+                    if (rebelDie == 2  && ministerDie == 1) {      // Traitor win the game
+                        println("Traitor Win The Game")
+                        exitProcess(0)
+                    }
                     println("Rebel Win The Game")
                     exitProcess(0)
                 } else if (hero.role is Minister) {
+                    ministerDie +=1
                     heroName = hero.name
+                } else if (hero.role is Traitor) {
+                    traitorDie +=1
+                    heroName = hero.name
+
                 }
 
             }
@@ -180,7 +191,7 @@ class Game {
                 }
 
                 currentHero.removeCard(cardPlaced);
-                checkHeroDied()
+                checkEndGame()
             }
             println()
         }
@@ -217,7 +228,7 @@ class Game {
         while (true) {
 
             for (hero in heros) {
-                if (hero.name == checkHeroDied()) {
+                if (hero.name == checkEndGame()) {
                     continue
                 }
                 currentHero = hero;
