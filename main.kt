@@ -26,7 +26,8 @@ class Game {
                     rebelDie += 1
                     heroName = hero.name
 
-                    if (rebelDie == 2 &&  traitorDie == 1) {
+                    if (rebelDie == 2) {
+                        var asd = readln()
                         println("Monarch and Minister Win The Game")
                         exitProcess(0)
                     }
@@ -62,7 +63,7 @@ class Game {
         }
         for (diedHeroindex in diedHerosIndex) {
             heros.removeAt(diedHeroindex)
-            mainEventManager.listeners.removeAt(diedHeroindex)
+//            mainEventManager.listeners.removeAt(diedHeroindex)
         }
     }
 
@@ -108,13 +109,16 @@ class Game {
             currentHero.displayCards();
             print("0.[End of turn]\n");
             print("Please select a card: \n");
-            var cardPlaced = currentHero.cards[Random.nextInt(0, currentHero.cards.size)]
 
+            var placeNum=Random.nextInt(0,currentHero.cards.size)
+            var cardPlaced = currentHero.cards[placeNum]
+
+//            var cardPlaced = Random.nextInt(currentHero.cards.size)
 
 //var asd = readln()
 
 
-            if (cardPlaced.rank == 0 || currentHero.checkOnlyDodge_Attack_Peach(currentHero) == 0 || flash == 0) {
+            if (placeNum == 0 ||currentHero.checkOnlyDodge_Attack_Peach(currentHero) == 0 || flash == 0) {
 
                 println()
                 discardPhase()
@@ -151,6 +155,7 @@ class Game {
                         println("You HP is max, please you again select other card")
                         flash = currentHero.flashRepeat(0)
                         continue
+
                     } else {
                         currentHero.HP += 1
                         currentHero.removeCard(cardPlaced)

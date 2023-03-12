@@ -62,13 +62,8 @@ abstract class Hero(role: Role) : Handler {
         var onlyCard = 0
         for (c in currentHero.cards) {
 
-            if (c !is DodgeCard || c !is AttackCard) {
+            if (c !is DodgeCard || c !is AttackCard ) {
                 onlyCard += 1
-            }
-
-            if (currentHero.HP < currentHero.maxHP && c is PeachCard) {
-                onlyCard += 1
-
             }
 
         }
@@ -109,12 +104,12 @@ abstract class Hero(role: Role) : Handler {
             println("Please place a card");
             this.displayCardFromList(cardList);
 //            var index = readLine()?.toInt(); //card of index
-            var index = cardList[Random.nextInt(cardList.size)]; //card of index
+            var index = Random.nextInt(cardList.size); //card of index
 
 
-            if (index !== null && cards.size >= index.rank && index.rank!! > 0) {
+            if (index !== null && cards.size >= index && index!! > 0) {
 //                return cards[index - 1];
-                return cards[index.rank];
+                return cards[index];
             }
             println("Not valid input, Please input again.");
             continue;
@@ -137,7 +132,7 @@ abstract class Hero(role: Role) : Handler {
             var index = Random.nextInt(cardList.size);
 
             if (index != 0 && cardList.size >= index!!) {
-                return cardList[index - 1];
+                return cardList[index];
             } else if (index == 0) {
                 break;
             }
@@ -258,6 +253,7 @@ abstract class Hero(role: Role) : Handler {
         //selected by attacker
         var index = Random.nextInt(availableHeroes.size);
 
+
         if (index != null) {
             mainEventManager.notifySpecificListener("Plifer", this, availableHeroes[index], placedCard);
 
@@ -367,4 +363,3 @@ abstract class Hero(role: Role) : Handler {
 
 
 }
-
