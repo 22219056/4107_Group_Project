@@ -169,7 +169,7 @@ class Game {
                 } else if (cardPlaced is lightningBolt) {
                     if (currentHero.getJudgmentZone().equals(cardPlaced is lightningBolt)) {
                         println("You already have a lightningBolt\n")
-                        flash = currentHero.fundas(0)
+                        flash = currentHero.flashRepeat(0)
                         continue
                     } else {
                         currentHero.judgmentZone.push(cardPlaced)

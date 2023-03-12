@@ -53,7 +53,7 @@ abstract class Hero(role: Role) : Handler {
             "attack" to Attack(this)
     )
 
-    open fun fundas(s: Int): Int {
+    open fun flashRepeat(s: Int): Int {
         var s = 0
         return s
     }
@@ -61,6 +61,7 @@ abstract class Hero(role: Role) : Handler {
     open fun checkOnlyDodge_Attack_Peach(currentHero: Hero): Int {
         var onlyCard = 0
         for (c in currentHero.cards) {
+
             if (c !is DodgeCard || c !is AttackCard) {
                 onlyCard += 1
             }
