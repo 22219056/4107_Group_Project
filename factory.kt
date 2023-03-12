@@ -1,4 +1,5 @@
 import People.Hero
+import People.KingLess.DiaoChan
 import People.Shu.*
 import People.Wu.*
 import People.Wei.*
@@ -10,7 +11,8 @@ class HeroFactory {
     fun initHeros() {
         listOfHero = mutableListOf<Hero>(
                 ZhouYU(Emperor()),
-                GuanYu(Rebels())
+                GuanYu(Rebels()),
+                DiaoChan(Rebels())
         );
 
         //add event listener
