@@ -8,14 +8,30 @@ class Game {
     lateinit var heros: MutableList<Hero>;
 
     fun startPhase() {
+        println("start phase");
+    }
+
+    fun checkHeroDied(){
+        for ((index, hero) in heros.withIndex()) {
+            if(hero.HP<=0){
+                println("${hero.name} has died")
+                heros.removeAt(index)
+                mainEventManager.listeners.removeAt(index)
+                println(heros.size)
+//                if(heros.size>1){
+//                    continue
+//                }
+            }
+        }
         if(heros.size==1){
+            println(heros.size)
             println("win")
             exitProcess(0)
         }
-        println("start phase");
-
-
     }
+
+
+
 
     fun judgmentPhase() {
         var nextHero: Hero
@@ -142,6 +158,7 @@ class Game {
                 }
 
                 currentHero.removeCard(cardPlaced);
+                checkHeroDied()
             }
             println()
         }
@@ -176,12 +193,14 @@ class Game {
 
     fun start() {
         while (true) {
+
             for (hero in heros) {
 
                 currentHero = hero;
                 startPhase();
                 judgmentPhase()
                 if(hero.HP>0){
+
                     mainPhase("${hero.name}");
                     endPhase();
                     println();

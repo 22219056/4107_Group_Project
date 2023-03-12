@@ -88,7 +88,7 @@ class lightningBolt(color: Color, suit: Suit, rank: Int) : TacticsCard() {
                 if(currentHero.HP<=0){
                     currentHero.alive = false
                     println("${currentHero.name} is dead by lightningBolt")
-                    heros.remove(currentHero)
+//                    heros.remove(currentHero)
                 }
 
             } else {

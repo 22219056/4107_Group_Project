@@ -60,7 +60,7 @@ abstract class Hero(role: Role) : Handler {
     open fun checkOnlyDodge_Attack_Peach(currentHero: Hero): Int {
         var onlyCard = 0
         for (c in currentHero.cards) {
-            if (!c.name.equals("Dodge") || !c.name.equals("Attack") ) {
+            if (c !is DodgeCard || c !is AttackCard ) {
                 onlyCard += 1
 
 //                var asd = readLine()
